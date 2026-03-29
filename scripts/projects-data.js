@@ -52,8 +52,8 @@ window.projects = [
     image: "assets/study-station-screenshot.png",
     details:
       "StudyStation is a multi-page web interface designed for a WhatsApp learning channel. Built with HTML, Tailwind CSS, and JavaScript, it features responsive layouts, fluid animations, and a clean, soft aesthetic. The site focuses on delivering a seamless and engaging browsing experience, structured to showcase resources, updates, and channel insights effectively.",
-    demo: "https://bugcurator.github.io/StudyStation/",
-    github: "https://github.com/bugcurator/StudyStation",
+    demo: "https://ubaidwebdeveloper.github.io/StudyStation/",
+    github: "https://github.com/ubaidwebdeveloper/StudyStation",
     outcomes: [
       { icon: "zap", label: "Sub-1s load time" },
       { icon: "check-circle", label: "Client live since Jan 2025" },
@@ -78,8 +78,8 @@ window.projects = [
     image: "assets/hadaf-immigration-screenshot.png",
     details:
       "A modern, single-page website designed for Hadaf Immigration Consultancy, which assists students in pursuing education abroad. This ready-to-use UI emphasizes clarity, smooth animations, and professional layout to attract and engage potential clients. Ideal for any consultancy looking to establish a trustworthy digital presence. Fully responsive and easy to customize or deploy.",
-    demo: "https://bugcurator.github.io/Hadaf-Immigration/",
-    github: "https://github.com/bugcurator/Hadaf-Immigration",
+    demo: "https://ubaidwebdeveloper.github.io/Hadaf-Immigration/",
+    github: "https://github.com/ubaidwebdeveloper/Hadaf-Immigration",
     outcomes: [
       { icon: "check-circle", label: "Client live since Jan 2025" },
       { icon: "zap", label: "Sub-1s load time" },
