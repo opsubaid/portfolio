@@ -1,13 +1,15 @@
 /* =========================================================
-         ROOT VARIABLES — Gold / Dark Theme (Preserved)
+                ROOT VARIABLES - Gold Noir Theme
    ========================================================= */
 :root {
   --bg-dark: #1a1a1a;
   --text-dark: #e8e8e8;
-  --accent-dark: var(--accent-rgb-hex);
+  --accent-dark: #d4af37;
+  --accent-light: #f0d896;
+  --accent-rgb: 212, 175, 55;
   --glass-dark: rgba(255, 255, 255, 0.05);
-  --border-dark: rgba(var(--accent-rgb), 0.2);
-  --shadow-color: rgba(var(--accent-rgb), 0.5);
+  --border-dark: rgba(212, 175, 55, 0.2);
+  --shadow-color: rgba(212, 175, 55, 0.5);
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -21,7 +23,9 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* scroll-behavior is managed by the JS smooth-scroll system in script.js
+     which sets it to 'auto' at runtime so the RAF-based easer has full control. */
+  scroll-behavior: auto;
 }
 
 body {
@@ -123,18 +127,14 @@ body.modal-open {
   top: -200px;
   left: -200px;
   animation-delay: 0s;
-  background: linear-gradient(
-    135deg,
-    var(--accent-rgb-hex),
-    var(--accent-dark)
-  );
+  background: linear-gradient(135deg, #d4af37, #c49a3a);
 }
 
 .liquid-bg::after {
   bottom: -200px;
   right: -200px;
   animation-delay: 10s;
-  background: linear-gradient(135deg, #8b7355, var(--accent-rgb-hex));
+  background: linear-gradient(135deg, #8b7355, #d4af37);
 }
 
 @keyframes liquidFloat {
@@ -364,13 +364,6 @@ body.modal-open {
   position: relative;
 }
 
-.hero-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
 .hero-glass-container {
   text-align: center;
   padding: 3rem;
@@ -560,21 +553,6 @@ body.modal-open {
   line-height: 1.2;
 }
 
-/* --- Keep "profile-image" as a no-op alias so no other code breaks --- */
-.profile-image {
-  display: contents;
-}
-
-@keyframes profileGlow {
-  0%,
-  100% {
-    box-shadow: 0 0 40px var(--shadow-color);
-  }
-  50% {
-    box-shadow: 0 0 60px var(--shadow-color);
-  }
-}
-
 .hero-title {
   font-size: 3rem;
   font-weight: 800;
@@ -675,7 +653,7 @@ body.modal-open {
 }
 
 /* =========================================================
-                 SKILLS — Tabbed Category Bar
+                 SKILLS - Tabbed Category Bar
    ========================================================= */
 .skills-category-bar {
   display: flex;
@@ -861,6 +839,71 @@ body.modal-open {
   font-size: 0.95rem;
 }
 
+/* -- Experience Card - Collapsible -- */
+.exp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* Odd cards are right-aligned - keep title left of button */
+.experience-item:nth-child(odd) .exp-header {
+  flex-direction: row-reverse;
+}
+
+.exp-toggle {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 2px solid var(--accent-dark);
+  background: transparent;
+  color: var(--accent-dark);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+  padding: 0;
+  line-height: 1;
+  font-size: 0;
+}
+
+.exp-toggle:hover {
+  background: var(--accent-dark);
+  color: #1a1a2e;
+  transform: scale(1.1);
+}
+
+.exp-toggle i {
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.exp-body {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.35s ease;
+  /* Small top gap once open */
+  padding-top: 0;
+}
+
+.experience-item.exp-expanded .exp-body {
+  padding-top: 0.75rem;
+}
+
 /* Load More / Show Less Buttons */
 .load-more-btn {
   display: inline-flex;
@@ -883,196 +926,6 @@ body.modal-open {
 .load-more-btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* =========================================================
-                        PROJECTS GRID
-   ========================================================= */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
-  width: 100%;
-}
-
-.project-card {
-  padding: 0;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.5s var(--spring);
-  position: relative;
-}
-
-.project-card:hover {
-  transform: translateY(-10px) scale(1.03);
-  box-shadow:
-    0 15px 30px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(var(--accent-rgb), 0.2);
-}
-
-.project-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-.project-content {
-  padding: 1.5rem;
-  text-align: left;
-}
-
-.project-title {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-}
-
-/* Project Type Tags */
-.project-type-tag {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
-  transition: all 0.5s ease;
-}
-
-.type-client {
-  background: rgba(var(--accent-rgb), 0.1);
-  color: var(--accent-dark);
-}
-.type-personal {
-  background: rgba(255, 99, 71, 0.1);
-  color: #ff6347;
-}
-.type-experience {
-  background: rgba(76, 175, 80, 0.1);
-  color: #4caf50;
-}
-.type-sale {
-  background: rgba(30, 144, 255, 0.1);
-  color: #1e90ff;
-}
-.type-maintenance {
-  background: rgba(128, 0, 128, 0.1);
-  color: #800080;
-}
-.type-archive {
-  background: rgba(105, 105, 105, 0.1);
-  color: #696969;
-}
-.type-featured {
-  background: rgba(255, 215, 0, 0.1);
-  color: #daa520;
-}
-.type-ui-ux {
-  background: rgba(255, 105, 180, 0.1);
-  color: #ff69b4;
-}
-.type-design-prototype {
-  background: rgba(70, 130, 180, 0.1);
-  color: #4682b4;
-}
-.type-frontend {
-  background: rgba(255, 140, 0, 0.1);
-  color: #ff8c00;
-}
-.type-backend {
-  background: rgba(0, 128, 128, 0.1);
-  color: #008080;
-}
-.type-fullstack {
-  background: rgba(199, 21, 133, 0.1);
-  color: #c71585;
-}
-.type-devops {
-  background: rgba(70, 130, 180, 0.1);
-  color: #4169e1;
-}
-.type-demo {
-  background: rgba(220, 20, 60, 0.1);
-  color: #dc143c;
-}
-.type-team {
-  background: rgba(32, 178, 170, 0.1);
-  color: #20b2aa;
-}
-.type-solo {
-  background: rgba(72, 61, 139, 0.1);
-  color: #483d8b;
-}
-.type-clone {
-  background: rgba(112, 128, 144, 0.1);
-  color: #708090;
-}
-.type-educational {
-  background: rgba(154, 205, 50, 0.1);
-  color: #9acd32;
-}
-.type-template {
-  background: rgba(255, 160, 122, 0.1);
-  color: #ffa07a;
-}
-.type-micro {
-  background: rgba(0, 206, 209, 0.1);
-  color: #00ced1;
-}
-
-/* =========================================================
-                          PINNED BADGE 
-   ========================================================= */
-.pinned-badge {
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.35rem 0.9rem 0.35rem 0.75rem;
-  background: linear-gradient(135deg, var(--accent-dark), var(--accent-dark));
-  color: #1a1a1a;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  border-radius: 0 20px 0 14px; /* top-right follows card curve, bottom-left soft */
-  z-index: 3;
-  box-shadow:
-    0 2px 8px rgba(var(--accent-rgb), 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
-  pointer-events: none;
-  user-select: none;
-}
-
-.pinned-badge i {
-  font-size: 0.7rem;
-  transform: rotate(45deg); /* point the thumbtack into the corner */
-}
-
-.project-summary {
-  font-size: 0.95rem;
-  line-height: 1.65;
-  opacity: 0.8;
-  margin-bottom: 1rem;
-}
-
-.project-tech {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.tech-tag {
-  padding: 0.375rem 0.875rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  background: rgba(var(--accent-rgb), 0.2);
-  color: var(--accent-dark);
-  border: 1px solid var(--border-dark);
-  transition: all 0.5s ease;
 }
 
 /* =========================================================
@@ -1143,52 +996,6 @@ body.modal-open {
 
 .modal-close:hover {
   transform: rotate(90deg);
-}
-
-.modal-project-image {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 1.5rem;
-}
-
-.modal-project-title {
-  font-size: 2rem;
-  font-weight: 800;
-  margin-bottom: 0.5rem;
-}
-
-.modal-project-details {
-  line-height: 1.8;
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-  opacity: 0.9;
-}
-
-.modal-project-links {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.modal-link {
-  padding: 0.875rem 1.75rem;
-  border-radius: 50px;
-  border: 1px solid var(--border-dark);
-  text-decoration: none;
-  font-weight: 700;
-  transition: all 0.5s var(--spring);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: var(--glass-dark);
-  color: var(--text-dark);
-  min-height: 44px;
-}
-
-.modal-link:hover {
-  transform: translateY(-3px);
 }
 
 /* =========================================================
@@ -1360,6 +1167,7 @@ body.modal-open {
   font-size: 1.1rem;
   font-weight: 700;
   margin-bottom: 0.25rem;
+  color: var(--accent-dark);
 }
 
 .testimonial-info p {
@@ -1401,38 +1209,6 @@ body.modal-open {
   margin: 0 auto 3rem;
   opacity: 0.8;
   line-height: 1.75;
-}
-
-.connect-buttons {
-  display: flex;
-  gap: 2rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.connect-btn {
-  padding: 1.25rem 2.75rem;
-  border-radius: 16px;
-  text-decoration: none;
-  color: inherit;
-  font-size: 1.1rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  transition: all 0.5s var(--spring);
-  min-height: 44px;
-}
-
-.connect-btn i {
-  font-size: 1.5rem;
-}
-
-.connect-btn:hover {
-  transform: translateY(-5px) scale(1.03);
-  box-shadow:
-    0 15px 30px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(var(--accent-rgb), 0.2);
 }
 
 /* =========================================================
@@ -1501,41 +1277,6 @@ body.modal-open {
   background: rgba(26, 26, 26, 0.8);
 }
 
-.footer-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 2rem;
-}
-
-.footer-text {
-  font-size: 0.95rem;
-  opacity: 0.8;
-}
-
-.footer-nav {
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
-.footer-nav a {
-  color: inherit;
-  text-decoration: none;
-  font-weight: 600;
-  opacity: 0.8;
-  transition: all 0.5s ease;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-}
-
-.footer-nav a:hover {
-  opacity: 1;
-  color: var(--accent-dark);
-}
-
 /* =========================================================
                   GLOW HOVER EFFECT (ripple)
    ========================================================= */
@@ -1566,7 +1307,7 @@ body.modal-open {
 }
 
 /* =========================================================
-   SCROLL ANIMATIONS — Bi-directional system
+   SCROLL ANIMATIONS - Bi-directional system
    Elements animate IN from the direction the user is scrolling:
      Scrolling DOWN → element slides up from below (from-below)
      Scrolling UP   → element slides down from above (from-above)
@@ -1623,8 +1364,6 @@ body.modal-open {
 .glass-card:not(.modal-content),
 .cta-button,
 .load-more-btn,
-.connect-btn,
-.modal-link,
 .category-btn {
   position: relative;
   overflow: hidden;
@@ -1639,8 +1378,6 @@ body.modal-open {
 .glass-card:not(.modal-content)::after,
 .cta-button::after,
 .load-more-btn::after,
-.connect-btn::after,
-.modal-link::after,
 .category-btn::after {
   content: "";
   position: absolute;
@@ -1663,8 +1400,6 @@ body.modal-open {
 .glass-card:not(.modal-content):hover::after,
 .cta-button:hover::after,
 .load-more-btn:hover::after,
-.connect-btn:hover::after,
-.modal-link:hover::after,
 .category-btn:hover::after {
   left: 160%;
 }
@@ -1719,7 +1454,7 @@ a.client-logo {
 }
 
 /* =========================================================
-                        RESPONSIVE — 768px
+                        RESPONSIVE - 768px
    ========================================================= */
 @media (max-width: 768px) {
   .desktop-nav {
@@ -1765,6 +1500,7 @@ a.client-logo {
 
   .stat-item h3 {
     font-size: 2rem;
+    color: var(--accent-dark);
   }
 
   /* Skills tabs - wrap on mobile */
@@ -1812,37 +1548,13 @@ a.client-logo {
     transform: translateX(-50%);
   }
 
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .modal-link {
-    font-size: 0.75rem;
+  /* Reset reversed header on mobile - single column, always LTR */
+  .experience-item:nth-child(odd) .exp-header {
+    flex-direction: row;
   }
 
   .collab-cards {
     grid-template-columns: 1fr;
-  }
-
-  .connect-buttons {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .connect-btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .footer-content {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .footer-nav {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
   }
 
   .testimonials-grid {
@@ -1851,7 +1563,7 @@ a.client-logo {
 }
 
 /* =========================================================
-                      RESPONSIVE — 480px
+                      RESPONSIVE - 480px
    ========================================================= */
 @media (max-width: 480px) {
   .hero-glass-container {
@@ -1874,65 +1586,7 @@ a.client-logo {
 }
 
 /* =========================================================
-          VIEW ALL PROJECTS BUTTON WRAP (index.html)
-   ========================================================= */
-.view-all-projects-wrap {
-  display: flex;
-  justify-content: center;
-  margin-top: 2.5rem;
-}
-
-.view-all-projects-wrap .cta-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* =========================================================
-              ALL PROJECTS PAGE (projects.html)
-   ========================================================= */
-.all-projects-section {
-  padding-top: calc(44px + 1rem + 2rem);
-  min-height: 100vh;
-}
-
-.all-projects-section .section-wrapper {
-  padding-bottom: 4rem;
-}
-
-.back-to-home-wrap {
-  display: flex;
-  justify-content: center;
-  margin-top: 3rem;
-}
-
-.back-to-home-wrap .cta-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* Ensure projects-grid stays responsive on all-projects page */
-.all-projects-section .projects-grid {
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 640px) {
-  .all-projects-section .projects-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .all-projects-section .projects-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* === AUDIT V2 ADDITIONS === */
-
-/* =========================================================
-            HERO ENTRANCE ANIMATION
+                     HERO ENTRANCE ANIMATION
    ========================================================= */
 @keyframes heroFadeUp {
   from {
@@ -1949,40 +1603,16 @@ a.client-logo {
 }
 
 /* =========================================================
-            COIN BACK - TECH PILL BADGES
-   ========================================================= */
-.coin-back-tech {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.coin-tech-pills {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: center;
-}
-.coin-tech-pill {
-  border: 1.5px solid var(--accent-dark);
-  color: var(--accent-dark);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: rgba(var(--accent-rgb), 0.1);
-}
-
-/* =========================================================
-            LIGHT / DARK MODE OVERRIDES
+                  LIGHT / DARK MODE OVERRIDES
    ========================================================= */
 :root[data-theme="light"] {
   --bg-dark: #f5f5f0;
   --text-dark: #1a1a1a;
   --glass-dark: rgba(255, 255, 255, 0.6);
-  --border-dark: var(--border-dark);
-  --accent-dark: var(--accent-dark);
-  --shadow-color: var(--shadow-color);
+  --border-dark: rgba(212, 175, 55, 0.2);
+  --accent-dark: #d4af37;
+  --accent-light: #f0d896;
+  --shadow-color: rgba(212, 175, 55, 0.5);
 }
 :root[data-theme="light"] body {
   background: #f5f5f0;
@@ -1996,7 +1626,7 @@ a.client-logo {
 }
 
 /* =========================================================
-            THEME TOGGLE BUTTON
+                      HEME TOGGLE BUTTON
    ========================================================= */
 .theme-toggle-btn {
   background: transparent;
@@ -2019,7 +1649,7 @@ a.client-logo {
 }
 
 /* =========================================================
-            ACTIVE NAV STATE
+                        ACTIVE NAV STATE
    ========================================================= */
 .desktop-nav a.nav-active {
   color: var(--accent-dark);
@@ -2028,79 +1658,7 @@ a.client-logo {
 }
 
 /* =========================================================
-            AVAILABLE FOR WORK BADGE
-   ========================================================= */
-@keyframes badgeBounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-@keyframes dotPulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.6;
-    transform: scale(1.3);
-  }
-}
-.available-badge {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 9999;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  background: var(--bg-dark);
-  border: 1.5px solid var(--accent-dark);
-  border-radius: 999px;
-  color: var(--text-dark);
-  font-size: 0.82rem;
-  font-weight: 600;
-  text-decoration: none;
-  animation: badgeBounce 2s ease-in-out infinite;
-  box-shadow: 0 4px 24px rgba(var(--accent-rgb), 0.2);
-  transition: box-shadow 0.2s ease;
-}
-.available-badge:hover {
-  box-shadow: 0 6px 32px rgba(var(--accent-rgb), 0.4);
-}
-.available-dot {
-  width: 10px;
-  height: 10px;
-  background: #22c55e;
-  border-radius: 50%;
-  animation: dotPulse 1.5s ease-in-out infinite;
-  flex-shrink: 0;
-}
-
-/* =========================================================
-            TESTIMONIALS SOCIAL PROOF CTA
-   ========================================================= */
-.testimonials-cta {
-  text-align: center;
-  margin-top: 2rem;
-  color: var(--text-dark);
-  opacity: 0.8;
-  font-size: 0.95rem;
-}
-.testimonials-cta a {
-  color: var(--accent-dark);
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* =========================================================
-            UPGRADED FOOTER
+                        UPGRADED FOOTER
    ========================================================= */
 .footer-upgraded {
   display: flex;
@@ -2129,27 +1687,9 @@ a.client-logo {
   opacity: 1;
   color: var(--accent-dark);
 }
-.footer-social-row {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-.footer-social-row a {
-  color: var(--text-dark);
-  opacity: 0.7;
-  transition:
-    opacity 0.2s,
-    color 0.2s;
-  display: inline-flex;
-  align-items: center;
-}
 .footer-social-row a:hover {
   opacity: 1;
   color: var(--accent-dark);
-}
-.footer-social-row svg {
-  width: 22px;
-  height: 22px;
 }
 .footer-availability {
   display: flex;
@@ -2159,33 +1699,6 @@ a.client-logo {
   color: var(--text-dark);
   opacity: 0.8;
 }
-.footer-avail-dot {
-  width: 8px;
-  height: 8px;
-  background: #22c55e;
-  border-radius: 50%;
-  animation: dotPulse 1.5s ease-in-out infinite;
-}
-.footer-cv-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--accent-dark);
-  font-size: 0.88rem;
-  font-weight: 600;
-  text-decoration: none;
-  border: 1px solid var(--accent-dark);
-  padding: 7px 16px;
-  border-radius: 8px;
-  transition: background 0.2s;
-}
-.footer-cv-link:hover {
-  background: rgba(var(--accent-rgb), 0.1);
-}
-.footer-cv-link svg {
-  width: 16px;
-  height: 16px;
-}
 .footer-copyright {
   font-size: 0.8rem;
   opacity: 0.5;
@@ -2193,7 +1706,7 @@ a.client-logo {
 }
 
 /* =========================================================
-            ABOUT PAGE — CAREER TIMELINE
+                ABOUT PAGE - CAREER TIMELINE
    ========================================================= */
 .timeline {
   position: relative;
@@ -2251,7 +1764,7 @@ a.client-logo {
 }
 
 /* =========================================================
-            ABOUT PAGE — CURRENTLY BLOCK
+                  ABOUT PAGE - CURRENTLY BLOCK
    ========================================================= */
 .currently-grid {
   display: grid;
@@ -2290,7 +1803,7 @@ a.client-logo {
 }
 
 /* =========================================================
-            SERVICES PAGE
+                          SERVICES PAGE
    ========================================================= */
 .service-tier-grid {
   display: grid;
@@ -2319,6 +1832,7 @@ a.client-logo {
   font-size: 1.1rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
+  color: var(--accent-dark);
 }
 .service-card p {
   font-size: 0.88rem;
@@ -2375,7 +1889,7 @@ a.client-logo {
 }
 
 /* =========================================================
-            SERVICES PAGE — PROCESS FLOW
+                  SERVICES PAGE - PROCESS FLOW
    ========================================================= */
 .process-flow {
   display: flex;
@@ -2433,6 +1947,7 @@ a.client-logo {
   font-size: 0.88rem;
   font-weight: 700;
   margin-bottom: 0.25rem;
+  color: var(--accent-dark);
 }
 .process-step p {
   font-size: 0.75rem;
@@ -2440,166 +1955,7 @@ a.client-logo {
 }
 
 /* =========================================================
-            CONTACT PAGE — CHANNEL CARDS
-   ========================================================= */
-.contact-channels-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
-  max-width: 680px;
-  margin: 0 auto;
-}
-@media (max-width: 540px) {
-  .contact-channels-grid {
-    grid-template-columns: 1fr;
-  }
-}
-.contact-channel-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  padding: 2rem 1.5rem;
-  text-decoration: none;
-  color: var(--text-dark);
-  text-align: center;
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s;
-}
-.contact-channel-card:hover {
-  border-color: var(--accent-dark);
-  box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.15);
-}
-.contact-channel-card svg {
-  width: 32px;
-  height: 32px;
-  color: var(--accent-dark);
-}
-.contact-channel-card h3 {
-  font-size: 1rem;
-  font-weight: 700;
-}
-.contact-channel-card span {
-  font-size: 0.8rem;
-  opacity: 0.6;
-}
-
-/* =========================================================
-            CONTACT PAGE — CALENDLY PLACEHOLDER
-   ========================================================= */
-.calendly-placeholder {
-  max-width: 480px;
-  margin: 0 auto;
-  text-align: center;
-  padding: 2.5rem;
-}
-.calendly-placeholder h3 {
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-.calendly-placeholder p {
-  font-size: 0.88rem;
-  opacity: 0.7;
-  margin-bottom: 1.5rem;
-}
-
-/* =========================================================
-            PROJECTS PAGE — FEATURED CARD + OUTCOMES
-   ========================================================= */
-.project-card.featured-card {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  align-items: center;
-}
-@media (max-width: 640px) {
-  .project-card.featured-card {
-    grid-template-columns: 1fr;
-  }
-}
-.featured-badge {
-  display: inline-block;
-  background: var(--accent-dark);
-  color: #1a1a1a;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  padding: 3px 10px;
-  border-radius: 4px;
-  margin-bottom: 0.75rem;
-}
-.outcome-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.75rem;
-}
-.outcome-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.75rem;
-  color: var(--text-dark);
-  opacity: 0.65;
-}
-.outcome-tag svg {
-  width: 13px;
-  height: 13px;
-  color: var(--accent-dark);
-}
-
-/* Currently Building Card */
-.currently-building-card {
-  border: 1.5px dashed var(--border-dark);
-}
-@keyframes hammerPulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.4;
-  }
-}
-.hammer-icon-pulse svg {
-  animation: hammerPulse 1.5s ease-in-out infinite;
-  width: 28px;
-  height: 28px;
-  color: var(--accent-dark);
-  margin-bottom: 0.75rem;
-}
-.progress-bar-wrap {
-  background: rgba(var(--accent-rgb), 0.1);
-  border-radius: 999px;
-  height: 6px;
-  width: 100%;
-  margin-top: 1rem;
-  overflow: hidden;
-}
-.progress-bar-fill {
-  height: 100%;
-  width: 20%;
-  background: var(--accent-dark);
-  border-radius: 999px;
-}
-.status-in-progress {
-  display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--accent-dark);
-  border: 1px solid var(--accent-dark);
-  padding: 2px 10px;
-  border-radius: 999px;
-  margin-top: 0.75rem;
-}
-
-/* =========================================================
-            ABOUT PAGE — PROFILE IMAGE
+                 ABOUT PAGE - PROFILE IMAGE
    ========================================================= */
 .about-profile-img {
   width: 140px;
@@ -2613,7 +1969,7 @@ a.client-logo {
 }
 
 /* =========================================================
-            PAGE HERO BLOCKS (shared, all pages)
+              PAGE HERO BLOCKS (shared, all pages)
    ========================================================= */
 .page-hero {
   padding: 8rem 1rem 4rem;
@@ -2622,7 +1978,10 @@ a.client-logo {
 .page-hero-title {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
-  color: var(--text-dark);
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 0.75rem;
   line-height: 1.15;
 }
@@ -2633,102 +1992,13 @@ a.client-logo {
   margin: 0 auto;
 }
 
-/* === AUDIT V2.1 REFINEMENTS === */
-
 /* =========================================================
-   MOBILE MENU — raise z-index above available badge
+      MOBILE MENU - raise z-index above available badge
    ========================================================= */
 .mobile-menu {
   z-index: 50000 !important;
 }
 
-/* =========================================================
-   AVAILABLE FOR WORK BADGE — button style, icon, no dot
-   ========================================================= */
-.available-badge {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 200;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 11px 20px;
-  background: var(--bg-dark);
-  border: 1.5px solid var(--accent-dark);
-  border-radius: 10px;
-  color: var(--accent-dark);
-  font-size: 0.82rem;
-  font-weight: 700;
-  text-decoration: none;
-  letter-spacing: 0.03em;
-  animation: badgeBounce 2s ease-in-out infinite;
-  box-shadow: 0 4px 24px rgba(var(--accent-rgb), 0.25);
-  transition:
-    box-shadow 0.2s ease,
-    background 0.2s ease;
-}
-.available-badge:hover {
-  background: rgba(var(--accent-rgb), 0.1);
-  box-shadow: 0 6px 32px rgba(var(--accent-rgb), 0.4);
-}
-.available-badge i {
-  font-size: 0.9rem;
-}
-/* hide old green dot if still present */
-.available-dot {
-  display: none !important;
-}
-
-/* =========================================================
-   TESTIMONIALS CTA — styled card with button
-   ========================================================= */
-.testimonials-cta {
-  text-align: center;
-  margin-top: 2.5rem;
-  padding: 1.75rem 2rem;
-  background: rgba(var(--accent-rgb), 0.05);
-  border: 1px solid rgba(var(--accent-rgb), 0.22);
-  border-radius: 16px;
-  max-width: 420px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.testimonials-cta p {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  opacity: 0.8;
-  color: var(--text-dark);
-}
-.testimonials-cta a,
-.testimonials-cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 11px 26px;
-  background: var(--accent-dark);
-  color: #1a1a1a !important;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 0.9rem;
-  text-decoration: none !important;
-  transition:
-    opacity 0.2s,
-    transform 0.2s;
-  border: none;
-}
-.testimonials-cta a:hover,
-.testimonials-cta-btn:hover {
-  opacity: 0.88;
-  transform: translateY(-1px);
-}
-
-/* =========================================================
-   COIN BACK — professional verified badge (FA icons)
-   ========================================================= */
-.coin-back-tech {
-  display: none !important;
-}
 .coin-back {
   display: flex;
   flex-direction: column;
@@ -2771,74 +2041,7 @@ a.client-logo {
 }
 
 /* =========================================================
-   PROJECT CARDS — consistent outcome tag alignment
-   ========================================================= */
-.project-card {
-  display: flex !important;
-  flex-direction: column !important;
-}
-.project-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.project-tech {
-  flex: 1;
-}
-.outcome-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid rgba(var(--accent-rgb), 0.12);
-}
-.outcome-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.75rem;
-  color: var(--text-dark);
-  opacity: 0.7;
-}
-.outcome-tag i {
-  color: var(--accent-dark);
-  font-size: 0.7rem;
-}
-
-/* =========================================================
-   FOOTER — icon-only social row + availability icon
-   ========================================================= */
-.footer-avail-icon {
-  color: #22c55e;
-  font-size: 0.9rem;
-}
-.footer-avail-dot {
-  display: none !important;
-}
-.footer-cv-link {
-  display: none !important;
-}
-.footer-social-row svg {
-  display: none !important;
-}
-.footer-social-row a {
-  color: var(--text-dark);
-  opacity: 0.7;
-  transition:
-    opacity 0.2s,
-    color 0.2s;
-  display: inline-flex;
-  align-items: center;
-  font-size: 1.25rem;
-}
-.footer-social-row a:hover {
-  opacity: 1;
-  color: var(--accent-dark);
-}
-
-/* =========================================================
-   TIMELINE — left-aligned, clean
+                TIMELINE - left-aligned, clean
    ========================================================= */
 .timeline {
   position: relative;
@@ -2890,6 +2093,7 @@ a.client-logo {
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 0.3rem;
+  color: var(--accent-dark);
 }
 .timeline-content p {
   font-size: 0.87rem;
@@ -2898,7 +2102,7 @@ a.client-logo {
 }
 
 /* =========================================================
-   SERVICES — left-align bullet list content
+          SERVICES - left-align bullet list content
    ========================================================= */
 .service-card ul {
   text-align: left !important;
@@ -2908,27 +2112,7 @@ a.client-logo {
 }
 
 /* =========================================================
-   CONTACT — remove schedule-call section via class
-   ========================================================= */
-.calendly-placeholder {
-  display: none !important;
-}
-
-/* =========================================================
-   FEATURED CARD OVERRIDE — revert to normal grid card
-   ========================================================= */
-.project-card.featured-card {
-  grid-column: auto !important;
-  display: flex !important;
-  flex-direction: column !important;
-  grid-template-columns: unset !important;
-}
-.featured-badge {
-  display: none !important;
-}
-
-/* =========================================================
-   THEME TOGGLE — FA icon sizing
+                THEME TOGGLE - FA icon sizing
    ========================================================= */
 .theme-toggle-btn i {
   font-size: 1rem;
@@ -2937,7 +2121,7 @@ a.client-logo {
 }
 
 /* =========================================================
-   ABOUT PAGE — Philosophy grid (3-col, responsive)
+        ABOUT PAGE - Philosophy grid (3-col, responsive)
    ========================================================= */
 .philosophy-grid {
   display: grid;
@@ -2965,6 +2149,7 @@ a.client-logo {
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
+  color: var(--accent-dark);
 }
 .philosophy-card p {
   font-size: 0.85rem;
@@ -2992,10 +2177,14 @@ a.client-logo {
   font-size: 1.5rem;
   font-weight: 800;
   margin-bottom: 1.25rem;
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* =========================================================
-   SERVICES PAGE — tier icon (FA)
+                  SERVICES PAGE - tier icon (FA)
    ========================================================= */
 .service-tier-icon {
   font-size: 1.8rem;
@@ -3012,127 +2201,16 @@ a.client-logo {
   margin: 0 auto 0.5rem;
 }
 
-/* =========================================================
-   CONTACT PAGE — availability card
-   ========================================================= */
-.contact-avail-card {
-  max-width: 440px;
-  margin: 0 auto;
-  padding: 2.5rem 2rem;
-  text-align: center;
-}
-.contact-avail-card h2 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-.contact-avail-status {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 0.75rem;
-  font-weight: 600;
-}
-.contact-avail-icon {
-  color: #22c55e;
-  font-size: 1.15rem;
-}
-.contact-avail-card p {
-  font-size: 0.85rem;
-  opacity: 0.65;
-}
-
-/* contact channel card — FA icons */
-.contact-channel-card i {
-  font-size: 2rem;
-  color: var(--accent-dark);
-}
-
-/* =========================================================
-   PROJECTS PAGE — Currently Building card (FA hammer)
-   ========================================================= */
-.currently-building-card {
-  border: 1.5px dashed var(--border-dark);
-  padding: 2rem;
-  text-align: center;
-  max-width: 480px;
-  margin: 1.5rem auto 0;
-}
-.hammer-icon-pulse i {
-  animation: hammerPulse 1.5s ease-in-out infinite;
-  font-size: 1.75rem;
-  color: var(--accent-dark);
-  margin-bottom: 0.75rem;
-  display: block;
-}
-.currently-building-card h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-.currently-building-card p {
-  font-size: 0.88rem;
-  opacity: 0.7;
-  margin-bottom: 0.75rem;
-}
-
-/* =========================================================
-   AUDIT V2.2 — FINAL POLISH PASS
-   ========================================================= */
-
-/* ─────────────────────────────────────────────────────────
-   FIX 1: PROJECT TYPE TAGS — inline only, never full-width
-   ───────────────────────────────────────────────────────── */
-.project-type-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  margin-bottom: 0.6rem;
-}
-/* Ensure the tag itself stays auto-width inside the flex row */
-.project-type-tag {
-  display: inline-block !important;
-  width: auto !important;
-  align-self: auto !important;
-  flex: none !important;
-  white-space: nowrap;
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
-}
-.project-type-tag:hover {
-  opacity: 0.85;
-  transform: translateY(-1px);
-}
-
-/* ─────────────────────────────────────────────────────────
-   FIX 2: REPLACE ALL GREEN → GOLD/AMBER
-   ───────────────────────────────────────────────────────── */
 /* Footer availability icon */
 .footer-avail-icon {
   color: var(--accent-dark) !important;
 }
 /* Contact page availability icon */
-.contact-avail-icon {
-  color: var(--accent-dark) !important;
-}
-/* Available badge icon (briefcase already gold via color: var(--accent-dark)) */
-.available-dot {
-  background: var(--accent-dark) !important;
-}
-/* Any remaining green dots */
-.footer-avail-dot {
-  background: var(--accent-dark) !important;
-}
 /* Outcome tags: check-circle and bolt icons in gold */
-.outcome-tag i {
-  color: var(--accent-dark) !important;
-}
 
-/* ─────────────────────────────────────────────────────────
-   FIX 3: THEME TOGGLE — match hamburger button exactly
-   ───────────────────────────────────────────────────────── */
+/* =========================================================
+      FIX 3: THEME TOGGLE - match hamburger button exactly
+   ========================================================= */
 .theme-toggle-btn {
   width: 44px !important;
   height: 44px !important;
@@ -3155,7 +2233,7 @@ a.client-logo {
   background: rgba(var(--accent-rgb), 0.12) !important;
   transform: scale(1.05);
 }
-/* mobile-menu-btn already 44×44 — keep identical */
+/* mobile-menu-btn already 44×44 - keep identical */
 .mobile-menu-btn {
   width: 44px;
   height: 44px;
@@ -3177,17 +2255,17 @@ a.client-logo {
   transform: scale(1.05);
 }
 
-/* ─────────────────────────────────────────────────────────
-   FIX 4: TIMELINE — dot perfectly centered ON the line
-   ──────────────────────────────────────────────────────── */
+/* =========================================================
+    FIX 4: TIMELINE - dot perfectly centered ON the line
+   ========================================================= */
 .timeline {
   position: relative;
   max-width: 640px;
   margin: 2rem auto 0;
-  padding: 0.5rem 0 0.5rem 2.75rem; /* 44px left padding */
+  padding: 0.5rem 0 0.5rem 2.75rem;
   text-align: left;
 }
-/* Vertical line anchored at left: 14px — center of 28px dot area */
+/* Vertical line anchored at left: 14px - center of 28px dot area */
 .timeline::before {
   content: "";
   position: absolute;
@@ -3249,6 +2327,7 @@ a.client-logo {
   font-weight: 700;
   margin-bottom: 0.35rem;
   line-height: 1.3;
+  color: var(--accent-dark);
 }
 .timeline-content p {
   font-size: 0.87rem;
@@ -3256,11 +2335,11 @@ a.client-logo {
   line-height: 1.65;
 }
 
-/* ─────────────────────────────────────────────────────────
-   FIX 5: PROCESS FLOW — snake layout on mobile w/ FA arrows
-   ───────────────────────────────────────────────────────── */
+/* =========================================================
+   FIX 5: PROCESS FLOW - snake layout on mobile w/ FA arrows
+   ========================================================= */
 
-/* ── Desktop: horizontal row (keep existing, refine) ── */
+/* -- Desktop: horizontal row (keep existing, refine) -- */
 .process-flow {
   display: flex;
   gap: 0;
@@ -3334,6 +2413,7 @@ a.client-logo {
   font-size: 0.88rem;
   font-weight: 700;
   margin-bottom: 0.3rem;
+  color: var(--accent-dark);
 }
 .process-step p {
   font-size: 0.75rem;
@@ -3341,7 +2421,7 @@ a.client-logo {
   line-height: 1.55;
 }
 
-/* ── Mobile: vertical snake with arrow connectors ── */
+/* -- Mobile: vertical snake with arrow connectors -- */
 @media (max-width: 640px) {
   .process-flow {
     display: grid;
@@ -3361,7 +2441,7 @@ a.client-logo {
     position: relative;
   }
 
-  /* ── Snake connectors using ::before on each non-first step ── */
+  /* -- Snake connectors using ::before on each non-first step -- */
 
   /* Step 2 (col 2, row 1): arrow coming from left (step 1 → step 2) */
   .process-step:nth-child(2)::before {
@@ -3382,7 +2462,7 @@ a.client-logo {
   .process-step:nth-child(2)::after {
     content: "";
     position: absolute;
-    /* corner arrow — handled via step 3 ::before */
+    /* corner arrow - handled via step 3 ::before */
     display: none;
   }
   .process-step:nth-child(3)::before {
@@ -3433,12 +2513,12 @@ a.client-logo {
 }
 
 /* =========================================================
-   AUDIT V2.3 — FINAL FINAL POLISH
+                    POLISH PASS - FIX BATCH 2
    ========================================================= */
 
-/* ─────────────────────────────────────────────────────────
-   FIX 1: HAMBURGER — restore on mobile (v2.2 broke it)
-   ───────────────────────────────────────────────────────── */
+/* =========================================================
+      FIX 1: HAMBURGER - restore on mobile (v2.2 broke it)
+   ========================================================= */
 @media (max-width: 768px) {
   .mobile-menu-btn {
     display: flex !important;
@@ -3447,9 +2527,9 @@ a.client-logo {
   }
 }
 
-/* ─────────────────────────────────────────────────────────
-   FIX 2: MOBILE SUB-NAV
-   ───────────────────────────────────────────────────────── */
+/* =========================================================
+                      FIX 2: MOBILE SUB-NAV
+   ========================================================= */
 .mobile-nav-group {
   display: flex;
   flex-direction: column;
@@ -3497,82 +2577,13 @@ a.client-logo {
   color: var(--accent-dark);
 }
 
-/* ─────────────────────────────────────────────────────────
-   FIX 3: TECH TAGS — consistent, no stretching, no flex-1
-   ───────────────────────────────────────────────────────── */
-.project-tech {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 0.45rem !important;
-  flex: unset !important; /* kills the flex:1 from v2.1 */
-  align-items: flex-start !important;
-  align-content: flex-start !important;
-}
-.tech-tag {
-  display: inline-flex !important;
-  align-items: center;
-  flex: none !important; /* never stretch */
-  width: auto !important;
-  white-space: nowrap;
-  padding: 0.35rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  background: rgba(var(--accent-rgb), 0.15);
-  color: var(--accent-dark);
-  border: 1px solid rgba(var(--accent-rgb), 0.25);
-  transition:
-    background 0.25s ease,
-    border-color 0.25s ease,
-    transform 0.25s ease;
-}
-.tech-tag:hover {
-  background: rgba(var(--accent-rgb), 0.28);
-  border-color: var(--accent-dark);
-  transform: translateY(-1px);
-}
+/* =========================================================
+      FIX 3: TECH TAGS - consistent, no stretching, no flex-1
+   ========================================================= */
 
-/* ─────────────────────────────────────────────────────────
-   FIX 4: AVAILABLE BADGE — icon only, compact circle pill
-   ───────────────────────────────────────────────────────── */
-.available-badge {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 200;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: 1.5px solid var(--accent-dark);
-  background: var(--bg-dark);
-  color: var(--accent-dark);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  font-size: 1.15rem;
-  box-shadow: 0 4px 20px rgba(var(--accent-rgb), 0.25);
-  animation: badgeBounce 2s ease-in-out infinite;
-  transition:
-    box-shadow 0.25s ease,
-    background 0.25s ease,
-    transform 0.25s ease;
-}
-.available-badge:hover {
-  background: rgba(var(--accent-rgb), 0.12);
-  box-shadow: 0 6px 30px rgba(var(--accent-rgb), 0.45);
-  transform: scale(1.1);
-  animation: none; /* pause bounce on hover */
-}
-/* Hide the text span inside badge (if any) */
-.available-badge span,
-.available-badge-text {
-  display: none !important;
-}
-
-/* ─────────────────────────────────────────────────────────
-   FIX 5: PROCESS FLOW — remove ALL arrows & dashes
-   ───────────────────────────────────────────────────────── */
+/* =========================================================
+        FIX 5: PROCESS FLOW - remove ALL arrows & dashes
+   ========================================================= */
 /* Desktop: kill dashed lines */
 .process-step::after {
   display: none !important;
@@ -3618,9 +2629,9 @@ a.client-logo {
   }
 }
 
-/* ─────────────────────────────────────────────────────────
-   MOBILE NAV GROUPS — override gap for grouped layout
-   ───────────────────────────────────────────────────────── */
+/* =========================================================
+      MOBILE NAV GROUPS - override gap for grouped layout
+   ========================================================= */
 .mobile-nav {
   gap: 0.25rem !important;
 }
@@ -3639,13 +2650,13 @@ a.client-logo {
 }
 
 /* =========================================================
-   AUDIT V2.3 — DEFINITIVE FINAL POLISH
-   (last in file = wins all cascade conflicts)
+                POLISH PASS - DEFINITIVE OVERRIDES
+            (last in file = wins all cascade conflicts)
    ========================================================= */
 
-/* ─────────────────────────────────────────────────────────
-   1. MOBILE HAMBURGER — always visible on ≤768px
-   ───────────────────────────────────────────────────────── */
+/* =========================================================
+        1. MOBILE HAMBURGER - always visible on ≤768px
+   ========================================================= */
 @media (max-width: 768px) {
   .mobile-menu-btn {
     display: flex !important;
@@ -3658,7 +2669,7 @@ a.client-logo {
     background: var(--glass-dark) !important;
     color: var(
       --accent-dark
-    ) !important; /* gold icon — visible on both themes */
+    ) !important; /* gold icon - visible on both themes */
     font-size: 1.1rem !important;
     flex-shrink: 0 !important;
     transition: all 0.3s ease !important;
@@ -3672,9 +2683,9 @@ a.client-logo {
   }
 }
 
-/* ─────────────────────────────────────────────────────────
-   2. MOBILE SUB-NAV — per-page context links
-   ───────────────────────────────────────────────────────── */
+/* =========================================================
+          2. MOBILE SUB-NAV - per-page context links
+   ========================================================= */
 .mobile-nav {
   display: flex;
   flex-direction: column;
@@ -3743,99 +2754,14 @@ a.client-logo {
   transform: translateX(3px);
 }
 
-/* ─────────────────────────────────────────────────────────
-   3. TECH TAGS — nuclear reset, consistent across all cards
-   ───────────────────────────────────────────────────────── */
-.project-content {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
+/* =========================================================
+    3. TECH TAGS - nuclear reset, consistent across all cards
+   ========================================================= */
 /* Kill the flex:1 stretcher */
-.project-tech {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 0.4rem !important;
-  flex: 0 0 auto !important; /* never grow/shrink */
-  align-items: flex-start !important;
-  align-content: flex-start !important;
-  margin-bottom: 0 !important;
-  width: 100% !important;
-}
-.tech-tag {
-  display: inline-flex !important;
-  align-items: center !important;
-  flex: 0 0 auto !important; /* never stretch */
-  width: auto !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  white-space: nowrap !important;
-  padding: 0.3rem 0.75rem !important;
-  border-radius: 20px !important;
-  font-size: 0.76rem !important;
-  font-weight: 600 !important;
-  background: rgba(var(--accent-rgb), 0.12) !important;
-  color: var(--accent-dark) !important;
-  border: 1px solid rgba(var(--accent-rgb), 0.22) !important;
-  transition:
-    background 0.25s ease,
-    border-color 0.25s ease,
-    transform 0.22s ease !important;
-  box-sizing: border-box !important;
-}
-.tech-tag:hover {
-  background: rgba(var(--accent-rgb), 0.25) !important;
-  border-color: var(--accent-dark) !important;
-  transform: translateY(-2px) !important;
-}
 
-/* ─────────────────────────────────────────────────────────
-   4. AVAILABLE BADGE — icon-only circle, no text ever
-   ───────────────────────────────────────────────────────── */
-.available-badge {
-  position: fixed !important;
-  bottom: 24px !important;
-  right: 24px !important;
-  z-index: 200 !important;
-  width: 50px !important;
-  height: 50px !important;
-  border-radius: 50% !important;
-  border: 1.5px solid var(--accent-dark) !important;
-  background: var(--bg-dark) !important;
-  color: var(--accent-dark) !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-decoration: none !important;
-  font-size: 1.15rem !important;
-  padding: 0 !important;
-  box-shadow: 0 4px 20px rgba(var(--accent-rgb), 0.25) !important;
-  animation: badgeBounce 2.5s ease-in-out infinite !important;
-  transition:
-    box-shadow 0.25s ease,
-    transform 0.25s ease,
-    background 0.25s ease !important;
-  overflow: hidden !important;
-}
-.available-badge:hover {
-  background: rgba(var(--accent-rgb), 0.15) !important;
-  box-shadow: 0 6px 28px rgba(var(--accent-rgb), 0.5) !important;
-  transform: scale(1.12) !important;
-  animation: none !important;
-}
-/* Nuke any text node or span inside badge */
-.available-badge > * {
-  pointer-events: none;
-}
-.available-badge i {
-  font-size: 1.1rem !important;
-  color: var(--accent-dark) !important;
-  line-height: 1 !important;
-}
-
-/* ─────────────────────────────────────────────────────────
-   5. PROCESS FLOW — ZERO connectors, clean on all sizes
-   ───────────────────────────────────────────────────────── */
+/* =========================================================
+      5. PROCESS FLOW - ZERO connectors, clean on all sizes
+   ========================================================= */
 
 /* Kill every possible pseudo-element on every process step */
 .process-step::before,
@@ -3877,7 +2803,7 @@ a.client-logo {
   }
 }
 
-/* Mobile: 2-col grid, step 5 centered — no connectors */
+/* Mobile: 2-col grid, step 5 centered - no connectors */
 @media (max-width: 640px) {
   .process-flow {
     display: grid !important;
@@ -3918,15 +2844,10 @@ a.client-logo {
   transition: transform 0.3s ease !important;
 }
 
-/* ============================================================
-   AUDIT V2.3 — FINAL DEFINITIVE PATCH
-   All !important overrides to guarantee cascade wins
-   ============================================================ */
-
-/* ────────────────────────────────────────────────────────────
-   1. HAMBURGER — always visible on mobile, inside pill,
-      identical size/style to theme toggle
-   ──────────────────────────────────────────────────────────── */
+/* =========================================================
+        1. HAMBURGER - always visible on mobile, inside pill,
+        identical size/style to theme toggle
+   ========================================================= */
 @media (max-width: 768px) {
   .header-actions {
     gap: 0.5rem !important;
@@ -3955,7 +2876,7 @@ a.client-logo {
     background: rgba(var(--accent-rgb), 0.12) !important;
     transform: scale(1.05) !important;
   }
-  /* Theme toggle — match hamburger exactly on mobile */
+  /* Theme toggle - match hamburger exactly on mobile */
   .theme-toggle-btn {
     width: 40px !important;
     height: 40px !important;
@@ -3968,9 +2889,9 @@ a.client-logo {
   }
 }
 
-/* ────────────────────────────────────────────────────────────
-   2. MOBILE SUB-NAV — smooth accordion per page
-   ──────────────────────────────────────────────────────────── */
+/* =========================================================
+          2. MOBILE SUB-NAV - smooth accordion per page
+   ========================================================= */
 .mobile-nav {
   display: flex !important;
   flex-direction: column !important;
@@ -3980,7 +2901,7 @@ a.client-logo {
   display: flex !important;
   flex-direction: column !important;
 }
-/* Parent link — tap to expand */
+/* Parent link - tap to expand */
 .mobile-nav-group > .mobile-nav-link {
   cursor: pointer !important;
   display: flex !important;
@@ -4049,101 +2970,13 @@ a.client-logo {
   transform: translateX(4px) !important;
 }
 
-/* ────────────────────────────────────────────────────────────
-   3. TECH TAGS — pixel-perfect consistency everywhere
-   ──────────────────────────────────────────────────────────── */
-.project-tech {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 0.4rem !important;
-  flex: 0 0 auto !important;
-  align-items: flex-start !important;
-  align-content: flex-start !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
-}
-.tech-tag {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  flex: 0 0 auto !important;
-  width: auto !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  white-space: nowrap !important;
-  padding: 0.3rem 0.8rem !important;
-  border-radius: 20px !important;
-  font-size: 0.75rem !important;
-  font-weight: 600 !important;
-  background: rgba(var(--accent-rgb), 0.1) !important;
-  color: var(--accent-dark) !important;
-  border: 1px solid rgba(var(--accent-rgb), 0.2) !important;
-  box-sizing: border-box !important;
-  line-height: 1.4 !important;
-  transition:
-    background 0.25s ease,
-    border-color 0.25s ease,
-    transform 0.22s ease !important;
-}
-.tech-tag:hover {
-  background: rgba(var(--accent-rgb), 0.22) !important;
-  border-color: rgba(var(--accent-rgb), 0.55) !important;
-  transform: translateY(-2px) !important;
-}
+/* =========================================================
+      3. TECH TAGS - pixel-perfect consistency everywhere
+   ========================================================= */
 
-/* ────────────────────────────────────────────────────────────
-   4. AVAILABLE BADGE — circle, icon only, zero text
-   ──────────────────────────────────────────────────────────── */
-.available-badge {
-  position: fixed !important;
-  bottom: 24px !important;
-  right: 24px !important;
-  z-index: 200 !important;
-  width: 50px !important;
-  height: 50px !important;
-  border-radius: 50% !important;
-  background: var(--bg-dark) !important;
-  border: 1.5px solid var(--accent-dark) !important;
-  color: var(--accent-dark) !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-decoration: none !important;
-  padding: 0 !important;
-  gap: 0 !important;
-  box-shadow: 0 4px 20px rgba(var(--accent-rgb), 0.3) !important;
-  animation: badgeBounce 2.5s ease-in-out infinite !important;
-  overflow: hidden !important;
-  /* Nuke any text node via font-size: 0 on the element,
-     restore only for the icon child */
-  font-size: 0 !important;
-  line-height: 0 !important;
-  transition:
-    box-shadow 0.25s ease,
-    transform 0.25s ease,
-    background 0.25s ease !important;
-}
-.available-badge:hover {
-  background: rgba(var(--accent-rgb), 0.15) !important;
-  box-shadow: 0 6px 28px rgba(var(--accent-rgb), 0.5) !important;
-  transform: scale(1.12) !important;
-  animation: none !important;
-}
-.available-badge i {
-  font-size: 1.1rem !important;
-  line-height: 1 !important;
-  color: var(--accent-dark) !important;
-  display: inline-flex !important;
-  pointer-events: none !important;
-}
-/* Kill any span/text inside badge */
-.available-badge span {
-  display: none !important;
-}
-
-/* ────────────────────────────────────────────────────────────
-   5. PROCESS FLOW — ZERO connectors, pure & clean
-   ──────────────────────────────────────────────────────────── */
+/* =========================================================
+        5. PROCESS FLOW - ZERO connectors, pure & clean
+   ========================================================= */
 /* Nuke every possible pseudo-element on every process step */
 .process-step::before,
 .process-step::after,
@@ -4232,7 +3065,7 @@ a.client-logo {
   }
 }
 
-/* Number bubbles — consistent sizing/animation */
+/* Number bubbles - consistent sizing/animation */
 .process-number {
   width: 48px !important;
   height: 48px !important;
@@ -4268,6 +3101,7 @@ a.client-logo {
   font-size: 0.85rem !important;
   font-weight: 700 !important;
   margin-bottom: 0.3rem !important;
+  color: var(--accent-dark) !important;
 }
 .process-step p {
   font-size: 0.72rem !important;
@@ -4276,14 +3110,14 @@ a.client-logo {
 }
 
 /* =========================================================
-   CLIENTS SECTION — v2.5 additions
-   Existing .clients-carousel / .clients-track / .client-logo
-   rules remain unchanged above. These additions handle:
-     1. Section subtitle
-     2. No-logo card variant (.client-logo-text)
-     3. Initial pill (.client-initial-pill)
-     4. Company name label (.client-name-label)
-     5. Link type badge (.client-link-badge)
+      CLIENTS SECTION
+      Existing .clients-carousel / .clients-track / .client-logo
+      rules remain unchanged above. These additions handle:
+        1. Section subtitle
+        2. No-logo card variant (.client-logo-text)
+        3. Initial pill (.client-initial-pill)
+        4. Company name label (.client-name-label)
+        5. Link type badge (.client-link-badge)
    ========================================================= */
 
 /* Section subtitle */
@@ -4294,7 +3128,7 @@ a.client-logo {
   text-align: center;
 }
 
-/* ── No-logo card variant ── */
+/* -- No-logo card variant -- */
 .client-logo-text {
   flex-direction: column;
   gap: 0.5rem;
@@ -4347,7 +3181,7 @@ a.client-logo {
   color: var(--accent-dark);
 }
 
-/* ── Link type badge (bottom-right corner of every card) ── */
+/* -- Link type badge (bottom-right corner of every card) -- */
 .client-link-badge {
   position: absolute;
   bottom: 8px;
@@ -4382,9 +3216,9 @@ a.client-logo {
 }
 
 /* =========================================================
-   v2.8 — PROCESS FLOW: equal-height cards, top-aligned
-   Fixes the staggered vertical alignment caused by unequal
-   content lengths across the 5 steps.
+      PROCESS FLOW: equal-height cards, top-aligned
+      Fixes the staggered vertical alignment caused by unequal
+      content lengths across the 5 steps.
    ========================================================= */
 
 /* Stretch all cards to the tallest sibling's height */
@@ -4432,302 +3266,10 @@ a.client-logo {
 }
 
 /* =========================================================
-   v2.9 — THEME CUSTOMIZER
-   Palette trigger, slide-in panel, swatches, font buttons.
-   Gradient text overrides use --accent-light variable so
-   all 10 palettes look coherent on titles/logo.
-   ========================================================= */
+              PALETTE CONSISTENCY SYSTEM - Gold Noir
+   =========================================================
 
-/* ── CSS variable default (matches gold-noir palette) ── */
-:root {
-  --accent-light: var(--accent-light);
-  --font-body: "Plus Jakarta Sans", sans-serif;
-}
-
-/* ── Override all gradient text to use --accent-light ── */
-.hero-title,
-.section-title,
-.page-hero-title,
-.collab-title {
-  background: linear-gradient(
-    135deg,
-    var(--accent-dark),
-    var(--accent-light)
-  ) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-}
-.logo {
-  background: linear-gradient(
-    135deg,
-    var(--accent-dark),
-    var(--accent-light)
-  ) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-}
-.coin-back-title {
-  background: linear-gradient(
-    90deg,
-    var(--accent-light),
-    var(--accent-dark)
-  ) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-}
-
-/* ── Trigger button ── */
-#cs-trigger {
-  position: fixed;
-  bottom: 90px;
-  right: 24px;
-  z-index: 200;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: var(--bg-dark);
-  border: 1.5px solid var(--accent-dark);
-  color: var(--accent-dark);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.15rem;
-  cursor: pointer;
-  box-shadow: 0 4px 20px var(--shadow-color);
-  transition:
-    transform 0.3s var(--spring),
-    box-shadow 0.3s ease,
-    background 0.3s ease;
-  animation: badgeBounce 2.5s ease-in-out infinite;
-}
-#cs-trigger:hover,
-#cs-trigger.cs-open {
-  animation: none;
-  transform: scale(1.12) rotate(15deg);
-  background: rgba(var(--accent-rgb), 0.15);
-  box-shadow: 0 6px 28px var(--shadow-color);
-}
-#cs-trigger i {
-  font-size: 1.1rem;
-  pointer-events: none;
-}
-
-/* ── Panel ── */
-#cs-panel {
-  position: fixed;
-  top: 50%;
-  right: -340px;
-  transform: translateY(-50%);
-  width: 300px;
-  z-index: 49999;
-  background: rgba(20, 20, 20, 0.92);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid var(--border-dark);
-  border-radius: 20px;
-  padding: 1.5rem;
-  box-shadow:
-    -8px 0 40px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
-  transition: right 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-  overflow: hidden;
-}
-#cs-panel.cs-open {
-  right: 85px;
-}
-
-/* ── Panel header ── */
-.cs-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.25rem;
-}
-.cs-title {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--accent-dark);
-  letter-spacing: 0.04em;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-.cs-close {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 1px solid var(--border-dark);
-  background: transparent;
-  color: var(--text-dark);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  opacity: 0.6;
-  transition:
-    opacity 0.2s ease,
-    transform 0.3s ease;
-}
-.cs-close:hover {
-  opacity: 1;
-  transform: rotate(90deg);
-}
-
-/* ── Section label ── */
-.cs-section {
-  margin-bottom: 1rem;
-}
-.cs-section-label {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent-dark);
-  opacity: 0.8;
-  margin-bottom: 0.75rem;
-}
-.cs-section-label i {
-  font-size: 0.7rem;
-}
-
-/* ── Divider ── */
-.cs-divider {
-  height: 1px;
-  background: var(--border-dark);
-  margin: 1rem 0;
-  opacity: 0.5;
-}
-
-/* ── Swatches ── */
-.cs-swatches {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-.cs-swatch {
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  cursor: pointer;
-  transition:
-    transform 0.25s var(--spring),
-    box-shadow 0.25s ease,
-    border-color 0.2s ease;
-  position: relative;
-  outline: none;
-}
-.cs-swatch:hover {
-  transform: scale(1.2);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
-}
-.cs-swatch.cs-active {
-  border-color: #fff;
-  box-shadow:
-    0 0 0 3px var(--accent-dark),
-    0 4px 16px rgba(0, 0, 0, 0.4);
-  transform: scale(1.15);
-}
-.cs-active-label {
-  text-align: center;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--text-dark);
-  opacity: 0.55;
-  letter-spacing: 0.05em;
-  min-height: 1rem;
-  transition: opacity 0.2s ease;
-}
-
-/* ── Font buttons ── */
-.cs-fonts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.4rem;
-}
-.cs-font-btn {
-  padding: 0.45rem 0.6rem;
-  border-radius: 8px;
-  border: 1px solid var(--border-dark);
-  background: var(--glass-dark);
-  color: var(--text-dark);
-  font-size: 0.75rem;
-  font-weight: 500;
-  cursor: pointer;
-  text-align: left;
-  transition:
-    border-color 0.2s ease,
-    background 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.3;
-}
-.cs-font-btn:hover {
-  border-color: var(--accent-dark);
-  background: rgba(var(--accent-rgb), 0.08);
-  transform: translateX(2px);
-}
-.cs-font-btn.cs-active {
-  border-color: var(--accent-dark);
-  background: rgba(var(--accent-rgb), 0.15);
-  color: var(--accent-dark);
-  font-weight: 700;
-}
-
-/* ── Mobile adjustments ── */
-@media (max-width: 480px) {
-  #cs-panel {
-    width: 260px;
-    padding: 1.25rem;
-  }
-  #cs-panel.cs-open {
-    right: 12px;
-  }
-  #cs-trigger {
-    bottom: 90px;
-    right: 16px;
-    width: 44px;
-    height: 44px;
-    font-size: 1rem;
-  }
-  .cs-fonts {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* =========================================================
-   v2.10 — COMPLETE PALETTE CONSISTENCY SYSTEM
-   ─────────────────────────────────────────────────────────
-   1. --accent-rgb  →  raw R,G,B triplet per palette
-      Used as:  rgba(var(--accent-rgb), 0.X)
-      Set by JS on applyPalette() for each palette.
-
-   2. Global transition softness on palette/mode change.
-   3. Customizer panel: fully palette + light/dark aware.
-   4. Available badge + cs-trigger: identical size/position.
-   5. Timeline dot: perfect circle, no teardrop.
-   6. Coin glow: pure variable driven.
-   7. Light mode: complete override set including panel.
-   8. Font family section removed from panel (JS handles).
-   ========================================================= */
-
-/* ── Root default accent-rgb (gold-noir) ── */
-:root {
-  --accent-rgb: 212, 175, 55;
-}
-
-/* ── Global palette/mode transition softness ── */
+/* -- Global palette/mode transition softness -- */
 *,
 *::before,
 *::after {
@@ -4740,25 +3282,17 @@ a.client-logo {
 /* Preserve existing motion transitions (transform, width etc.) */
 .glass-card,
 .cta-button,
-.connect-btn,
-.modal-link,
 .category-btn,
 .skill-card,
-.project-card,
 .collab-card,
 .testimonial-card,
 .process-step,
-.tech-tag,
-.cs-swatch,
-.cs-font-btn,
 .mobile-nav-link,
 .mobile-subnav a,
 .desktop-nav a,
 .social-icon,
 .client-logo,
-.load-more-btn,
-#cs-trigger,
-.available-badge {
+.load-more-btn {
   transition:
     background-color 0.35s ease,
     border-color 0.35s ease,
@@ -4768,7 +3302,7 @@ a.client-logo {
     opacity 0.35s ease !important;
 }
 
-/* ── Coin glow: fully variable-driven ── */
+/* -- Coin glow: fully variable-driven -- */
 .profile-coin-container {
   box-shadow:
     0 0 0 var(--coin-border) var(--accent-dark),
@@ -4792,7 +3326,7 @@ a.client-logo {
   }
 }
 
-/* ── Timeline dot: force perfect circle, variable colors ── */
+/* -- Timeline dot: force perfect circle, variable colors -- */
 .timeline-dot {
   width: 12px !important;
   height: 12px !important;
@@ -4813,23 +3347,12 @@ a.client-logo {
     0 0 20px rgba(var(--accent-rgb), 0.45) !important;
 }
 
-/* ── Tech tags: full variable palette ── */
-.tech-tag {
-  background: rgba(var(--accent-rgb), 0.1) !important;
-  color: var(--accent-dark) !important;
-  border: 1px solid rgba(var(--accent-rgb), 0.22) !important;
-}
-.tech-tag:hover {
-  background: rgba(var(--accent-rgb), 0.22) !important;
-  border-color: var(--accent-dark) !important;
-}
+/* -- Tech tags: full variable palette -- */
 
-/* ── Shimmer sweep: variable gradient ── */
+/* -- Shimmer sweep: variable gradient -- */
 .glass-card:not(.modal-content)::after,
 .cta-button::after,
 .load-more-btn::after,
-.connect-btn::after,
-.modal-link::after,
 .category-btn::after {
   background: linear-gradient(
     120deg,
@@ -4839,7 +3362,7 @@ a.client-logo {
   ) !important;
 }
 
-/* ── Glow-hover ripple: variable ── */
+/* -- Glow-hover ripple: variable -- */
 .glow-hover::before {
   background: radial-gradient(
     circle,
@@ -4848,7 +3371,7 @@ a.client-logo {
   ) !important;
 }
 
-/* ── Skills category buttons ── */
+/* -- Skills category buttons -- */
 .category-btn.active {
   background: var(--accent-dark) !important;
   box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.45) !important;
@@ -4857,19 +3380,19 @@ a.client-logo {
   box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.2) !important;
 }
 
-/* ── Social icons tooltip ── */
+/* -- Social icons tooltip -- */
 .social-icon::before {
   background: rgba(var(--accent-rgb), 0.12) !important;
   border-color: rgba(var(--accent-rgb), 0.25) !important;
   color: var(--accent-dark) !important;
 }
 
-/* ── Client logo hover ── */
+/* -- Client logo hover -- */
 .client-logo:hover {
   box-shadow: 0 8px 20px rgba(var(--accent-rgb), 0.2) !important;
 }
 
-/* ── Process number bubble ── */
+/* -- Process number bubble -- */
 .process-number {
   background: rgba(var(--accent-rgb), 0.1) !important;
   border-color: var(--accent-dark) !important;
@@ -4879,7 +3402,7 @@ a.client-logo {
   box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.35) !important;
 }
 
-/* ── Experience timeline vertical line ── */
+/* -- Experience timeline vertical line -- */
 .experience-timeline::before {
   background: linear-gradient(
     180deg,
@@ -4892,121 +3415,7 @@ a.client-logo {
   box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.5) !important;
 }
 
-/* ── Testimonials CTA card ── */
-.testimonials-cta {
-  background: rgba(var(--accent-rgb), 0.05) !important;
-  border-color: rgba(var(--accent-rgb), 0.22) !important;
-}
-.testimonials-cta a,
-.testimonials-cta-btn {
-  background: var(--accent-dark) !important;
-}
-
-/* ── Available badge ── */
-.available-badge {
-  position: fixed !important;
-  bottom: 24px !important;
-  right: 24px !important;
-  z-index: 200 !important;
-  width: 50px !important;
-  height: 50px !important;
-  border-radius: 50% !important;
-  background: var(--bg-dark) !important;
-  border: 1.5px solid var(--accent-dark) !important;
-  color: var(--accent-dark) !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-size: 1.15rem !important;
-  box-shadow: 0 4px 20px rgba(var(--accent-rgb), 0.3) !important;
-}
-.available-badge:hover {
-  background: rgba(var(--accent-rgb), 0.15) !important;
-  box-shadow: 0 6px 28px rgba(var(--accent-rgb), 0.5) !important;
-}
-.available-badge i {
-  font-size: 1.15rem !important;
-  line-height: 1 !important;
-}
-
-/* ── Customizer trigger: identical to badge but offset ── */
-#cs-trigger {
-  position: fixed !important;
-  bottom: 88px !important; /* badge (24) + badge height (50) + 14px gap */
-  right: 24px !important;
-  z-index: 201 !important;
-  width: 50px !important;
-  height: 50px !important;
-  border-radius: 50% !important;
-  background: var(--bg-dark) !important;
-  border: 1.5px solid var(--accent-dark) !important;
-  color: var(--accent-dark) !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-size: 1.15rem !important;
-  cursor: pointer !important;
-  box-shadow: 0 4px 20px rgba(var(--accent-rgb), 0.3) !important;
-  animation: badgeBounce 2.5s ease-in-out infinite 0.3s !important;
-}
-#cs-trigger:hover,
-#cs-trigger.cs-open {
-  animation: none !important;
-  transform: scale(1.12) rotate(15deg) !important;
-  background: rgba(var(--accent-rgb), 0.15) !important;
-  box-shadow: 0 6px 28px rgba(var(--accent-rgb), 0.5) !important;
-}
-#cs-trigger i {
-  font-size: 1.15rem !important;
-  line-height: 1 !important;
-  pointer-events: none !important;
-}
-
-/* ── Customizer panel: palette + mode aware ── */
-#cs-panel {
-  background: var(--bg-dark) !important;
-  border-color: var(--border-dark) !important;
-  box-shadow:
-    -8px 0 40px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(var(--accent-rgb), 0.08) !important;
-}
-.cs-swatch {
-  transition:
-    transform 0.25s var(--spring),
-    box-shadow 0.25s ease,
-    border-color 0.2s ease !important;
-}
-.cs-swatch.cs-active {
-  box-shadow:
-    0 0 0 3px var(--accent-dark),
-    0 4px 16px rgba(0, 0, 0, 0.4) !important;
-}
-.cs-font-btn {
-  background: rgba(var(--accent-rgb), 0.04) !important;
-  border-color: rgba(var(--accent-rgb), 0.18) !important;
-  color: var(--text-dark) !important;
-}
-.cs-font-btn:hover {
-  border-color: var(--accent-dark) !important;
-  background: rgba(var(--accent-rgb), 0.1) !important;
-}
-.cs-font-btn.cs-active {
-  border-color: var(--accent-dark) !important;
-  background: rgba(var(--accent-rgb), 0.18) !important;
-  color: var(--accent-dark) !important;
-}
-.cs-close {
-  border-color: var(--border-dark) !important;
-  color: var(--text-dark) !important;
-}
-.cs-divider {
-  background: var(--border-dark) !important;
-}
-.cs-active-label {
-  color: var(--text-dark) !important;
-}
-
-/* ── Light mode: complete palette + panel override ── */
+/* -- Light mode: complete palette + panel override -- */
 :root[data-theme="light"] {
   --bg-dark: #f5f5f0;
   --text-dark: #1a1a1a;
@@ -5021,27 +3430,10 @@ a.client-logo {
 :root[data-theme="light"] .glass-card,
 :root[data-theme="light"] .glass-header,
 :root[data-theme="light"] .glass-footer {
-  background: rgba(255, 255, 255, 0.65) !important;
+  background: #f0f0eb !important;
   border-color: rgba(var(--accent-rgb), 0.25) !important;
 }
-:root[data-theme="light"] #cs-panel {
-  background: rgba(245, 245, 240, 0.97) !important;
-}
-:root[data-theme="light"] .cs-font-btn {
-  background: rgba(var(--accent-rgb), 0.06) !important;
-  color: #1a1a1a !important;
-}
-:root[data-theme="light"] .cs-close {
-  color: #1a1a1a !important;
-}
-:root[data-theme="light"] .cs-active-label {
-  color: #1a1a1a !important;
-}
-:root[data-theme="light"] .available-badge,
-:root[data-theme="light"] #cs-trigger {
-  background: #f5f5f0 !important;
-}
-:root[data-theme="light"] .mobile-menu-content {
+:root[data-theme="light"] :root[data-theme="light"] .mobile-menu-content {
   background: rgba(245, 245, 240, 0.97) !important;
 }
 :root[data-theme="light"] .modal-content {
@@ -5053,45 +3445,18 @@ a.client-logo {
   color: #1a1a1a;
 }
 
-/* ── Mobile: keep both icons same size/alignment ── */
+/* -- Mobile: keep both icons same size/alignment -- */
 @media (max-width: 480px) {
-  .available-badge {
-    bottom: 16px !important;
-    right: 16px !important;
-    width: 46px !important;
-    height: 46px !important;
-  }
-  #cs-trigger {
-    bottom: 78px !important; /* 16 + 46 + 16 */
-    right: 16px !important;
-    width: 46px !important;
-    height: 46px !important;
-  }
 }
 
-/* ── Outcome tags: variable colors ── */
-.outcome-tag i {
-  color: var(--accent-dark) !important;
-}
+/* -- Outcome tags: variable colors -- */
 
-/* ── Footer availability icon ── */
+/* -- Footer availability icon -- */
 .footer-avail-icon {
   color: var(--accent-dark) !important;
 }
-.contact-avail-icon {
-  color: var(--accent-dark) !important;
-}
 
-/* ── Currently building progress bar ── */
-.progress-bar-fill {
-  background: var(--accent-dark) !important;
-}
-.status-in-progress {
-  color: var(--accent-dark) !important;
-  border-color: var(--accent-dark) !important;
-}
-
-/* ── Client initial pill ── */
+/* -- Client initial pill -- */
 .client-initial-pill {
   background: rgba(var(--accent-rgb), 0.12) !important;
   border-color: var(--accent-dark) !important;
@@ -5107,31 +3472,17 @@ a.client-logo {
   color: var(--accent-dark) !important;
 }
 
-/* ── Scrollbar ── */
+/* -- Scrollbar -- */
 ::-webkit-scrollbar-thumb {
   background: var(--accent-dark) !important;
 }
 
-/* ── Stat counter numbers ── */
+/* -- Stat counter numbers -- */
 .stat-item h3 {
   color: var(--accent-dark) !important;
 }
 
-/* ── Pinned badge ── */
-.pinned-badge {
-  background: linear-gradient(
-    135deg,
-    var(--accent-dark),
-    rgba(var(--accent-rgb), 0.8)
-  ) !important;
-}
-
-/* ── Modal link buttons ── */
-.modal-link {
-  border-color: var(--border-dark) !important;
-}
-
-/* ── Service CTA button ── */
+/* -- Service CTA button -- */
 .service-cta-btn {
   border-color: var(--accent-dark) !important;
   color: var(--accent-dark) !important;
@@ -5144,18 +3495,13 @@ a.client-logo {
   color: var(--accent-dark) !important;
 }
 
-/* ── About CTA card ── */
+/* -- About CTA card -- */
 .about-cta-card {
   background: rgba(var(--accent-rgb), 0.06) !important;
   border-color: rgba(var(--accent-rgb), 0.25) !important;
 }
 
-/* ── Currently building card ── */
-.currently-building-card {
-  border-color: var(--border-dark) !important;
-}
-
-/* ── Mobile subnav border ── */
+/* -- Mobile subnav border -- */
 .mobile-subnav {
   border-left-color: rgba(var(--accent-rgb), 0.35) !important;
 }
@@ -5163,7 +3509,7 @@ a.client-logo {
   background: rgba(var(--accent-rgb), 0.07) !important;
 }
 
-/* ── Desktop nav active underline ── */
+/* -- Desktop nav active underline -- */
 .desktop-nav a::after {
   background: var(--accent-dark) !important;
 }
@@ -5172,37 +3518,1022 @@ a.client-logo {
   border-bottom-color: var(--accent-dark) !important;
 }
 
-/* ── Testimonial avatar border ── */
+/* -- Testimonial avatar border -- */
 .testimonial-avatar {
   border-color: var(--accent-dark) !important;
 }
 
-/* ── Testimonial stars ── */
+/* -- Testimonial stars -- */
 .testimonial-stars {
   color: var(--accent-dark) !important;
 }
 
-/* ── Contact channel card hover ── */
-.contact-channel-card:hover {
-  border-color: var(--accent-dark) !important;
-  box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.18) !important;
-}
-.contact-channel-card i,
-.contact-channel-card svg {
-  color: var(--accent-dark) !important;
-}
-
-/* ── About profile image ring ── */
+/* -- About profile image ring -- */
 .about-profile-img {
   border-color: var(--accent-dark) !important;
   box-shadow: 0 0 0 6px rgba(var(--accent-rgb), 0.12) !important;
 }
 
-/* ── Currently card icons ── */
+/* -- Currently card icons -- */
 .currently-icon,
 .philosophy-icon,
 .service-tier-icon,
-.collab-icon,
-.contact-avail-icon {
+.collab-icon {
   color: var(--accent-dark) !important;
+}
+
+/* =========================================================
+      TESTIMONIAL CAROUSEL
+      Added as a self-contained, reversible block.
+      To revert to the original grid layout, delete from here
+      to the matching END comment below.
+   ========================================================= */
+
+/* Override grid display set by .testimonials-grid class */
+#testimonialsGrid {
+  display: block;
+}
+
+/* Carousel wrapper - focusable for keyboard nav */
+.testimonial-carousel {
+  position: relative;
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+  outline: none;
+}
+
+.testimonial-carousel:focus-visible {
+  outline: 2px solid var(--accent-dark);
+  outline-offset: 8px;
+  border-radius: 20px;
+}
+
+/* Track clips the sliding cards */
+.carousel-track {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  /* Height set dynamically by JS after measuring tallest card */
+}
+
+/* -- Slide base - JS controls transform/opacity inline -- */
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* Buttery easing curve */
+  transition:
+    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+/* Soften the card hover transform inside the track
+   (scale can cause clipping against overflow:hidden) */
+.carousel-track .testimonial-card:hover {
+  transform: translateY(-6px) scale(1.01) !important;
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.28),
+    0 0 18px rgba(var(--accent-rgb), 0.15);
+}
+
+/* -- Controls row -- */
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+/* Prev / Next arrow buttons */
+.carousel-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(var(--accent-rgb), 0.35);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.carousel-btn:hover,
+.carousel-btn:focus-visible {
+  background: rgba(var(--accent-rgb), 0.12);
+  border-color: var(--accent-dark);
+  transform: scale(1.1);
+  outline: none;
+}
+
+.carousel-btn:active {
+  transform: scale(0.94);
+}
+
+/* Dot indicators */
+.carousel-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(var(--accent-rgb), 0.28);
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+.carousel-dot.tc-dot-active {
+  background: var(--accent-dark);
+  transform: scale(1.45);
+}
+
+.carousel-dot:focus-visible {
+  outline: 2px solid var(--accent-dark);
+  outline-offset: 3px;
+  border-radius: 50%;
+}
+
+/* -- Responsive tweaks -- */
+@media (max-width: 640px) {
+  .carousel-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .carousel-controls {
+    gap: 1rem;
+  }
+}
+
+/* -- END TESTIMONIAL CAROUSEL -- */
+
+/* =========================================================
+                PROJECT SCROLL-PREVIEW CAROUSEL
+   ========================================================= */
+
+.projects-carousel-section {
+  overflow: hidden;
+}
+
+/* -- Outer wrapper: positions arrows on sides -- */
+.pc-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* -- Viewport: clip only horizontally so hover-lift is never clipped -- */
+.pc-viewport {
+  overflow-x: hidden;
+  overflow-y: visible;
+  width: 100%;
+  flex: 1;
+}
+
+/* -- Track: horizontal row of all cards -- */
+.pc-track {
+  display: flex;
+  gap: 1.25rem;
+  transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+  /* Touch drag */
+  cursor: grab;
+  user-select: none;
+  /* Room at top for hover lift */
+  padding-top: 4px;
+}
+
+.pc-track.is-dragging {
+  cursor: grabbing;
+  transition: none;
+}
+
+/* -- Individual Project Card -- */
+/* FIX: card sized so exactly 3 fit in the viewport with 1.25rem gaps.
+   Width uses calc so it auto-fits: (100% - 2 * gap) / 3          */
+.pc-card {
+  flex: 0 0 calc((100% - 2 * 1.25rem) / 3);
+  width: calc((100% - 2 * 1.25rem) / 3);
+  min-height: 37.5rem; /* ≈ 600 px - fluid via rem so it scales with root font-size */
+  border-radius: 16px;
+  background: var(--glass-dark);
+  border: 1px solid var(--border-dark);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  transition: box-shadow 0.4s ease;
+  position: relative;
+  cursor: pointer;
+}
+
+/* Clip inner content (image) without clipping the outer hover shadow */
+.pc-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  pointer-events: none;
+}
+
+/* Clip only the card's own content area */
+.pc-card > * {
+  /* children are fine - card overflow:visible lets shadow breathe */
+}
+
+.pc-card:hover {
+  box-shadow: 0 8px 28px rgba(var(--accent-rgb), 0.2);
+}
+
+/* -- Inner Preview Box (82% height, 94% width, centered) -- */
+.pc-preview {
+  flex: 1 1 auto; /* grows to fill available card space */
+  min-height: 320px; /* minimum image box height - scales up with card min-height */
+  width: 94%;
+  margin: 1rem auto 0; /* 1 rem gap: card-top → image box */
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  border: none;
+  background: #111;
+  cursor: pointer;
+}
+
+/* -- The long screenshot image inside the preview box -- */
+/* IMAGE SCROLL SPEED: change the constant 5s below to adjust hover-scroll duration */
+.pc-preview-img {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  object-position: top center;
+  height: auto;
+  min-height: 100%;
+  /* Default/reset transition - JS overrides per image height on mouseenter */
+  transition: top 5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: top;
+}
+
+/* On hover of the PREVIEW BOX: JS drives the exact duration per image height */
+.pc-preview:hover .pc-preview-img {
+  /* top value set dynamically by JS on mouseenter */
+}
+
+/* -- Info Footer: title on top row, Visit button on second row -- */
+.pc-info {
+  flex: 0 0 auto; /* sized to content - title + button */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  padding: 1rem; /* 1rem top = gap from image; 1rem sides & bottom */
+  gap: 1rem; /* 1rem gap between title and Visit button */
+}
+
+.pc-title {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.35;
+  width: 100%;
+  text-align: center;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+/* -- Visit button - pill shape, connect-btn interaction system -- */
+.pc-visit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 1rem;
+  background: var(--glass-dark);
+  color: var(--text-dark);
+  border: 1px solid var(--border-dark);
+  border-radius: 999px; /* pill - only shape difference vs connect-btn */
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  /* Same transition timing as connect-btn / cta-button */
+  transition: all 0.5s var(--spring);
+  /* Shimmer + glow pseudo-elements need a stacking context */
+  position: relative;
+  overflow: hidden;
+}
+
+/* -- Glow ripple ::before  (mirrors .glow-hover::before) -- */
+.pc-visit-btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--shadow-color), transparent);
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.5s ease,
+    height 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.pc-visit-btn:hover::before {
+  width: 220px;
+  height: 220px;
+}
+
+/* -- Diagonal shimmer sweep ::after  (mirrors .connect-btn::after) -- */
+.pc-visit-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -110%;
+  width: 65%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(var(--accent-rgb), 0.18) 50%,
+    transparent 100%
+  );
+  transform: skewX(-18deg);
+  transition: left 0.65s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.pc-visit-btn:hover::after {
+  left: 160%;
+}
+
+/* -- Lift + accent glow on hover  (mirrors .connect-btn:hover) -- */
+.pc-visit-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.3),
+    0 0 15px rgba(var(--accent-rgb), 0.25);
+}
+
+/* -- Disabled state (visitEnabled: false) -- */
+.pc-visit-btn--disabled {
+  opacity: 0.35;
+  pointer-events: none;
+  cursor: default;
+  background: rgba(140, 140, 140, 0.08);
+  color: #888;
+  border-color: rgba(140, 140, 140, 0.2);
+}
+
+/* Kill pseudo-elements on disabled so nothing flickers */
+.pc-visit-btn--disabled::before,
+.pc-visit-btn--disabled::after {
+  display: none;
+}
+
+/* -- Navigation Arrows -- */
+.pc-arrow {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--glass-dark);
+  border: 1px solid var(--border-dark);
+  color: var(--accent-dark);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 1;
+}
+
+.pc-arrow:hover {
+  background: rgba(var(--accent-rgb), 0.2);
+  box-shadow: 0 0 16px rgba(var(--accent-rgb), 0.4);
+  transform: scale(1.08);
+}
+
+/* Override any disabled styling - circular nav means always active */
+.pc-arrow:disabled {
+  opacity: 1;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+/* -- Dot Indicators -- */
+.pc-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.pc-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(var(--accent-rgb), 0.25);
+  border: none;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
+  padding: 0;
+}
+
+.pc-dot.is-active {
+  background: var(--accent-dark);
+  transform: scale(1.4);
+}
+
+/* =========================================================
+                RESPONSIVE - Project Carousel
+   ========================================================= */
+
+/* Tablet: 2 cards visible */
+@media (max-width: 1100px) {
+  .pc-card {
+    flex: 0 0 calc((100% - 1 * 1.25rem) / 2);
+    width: calc((100% - 1 * 1.25rem) / 2);
+    min-height: 34rem; /* ~544px */
+  }
+  .pc-preview {
+    min-height: 280px;
+  }
+}
+
+/* Tablet portrait: 1 card visible */
+@media (max-width: 680px) {
+  .pc-card {
+    flex: 0 0 100%;
+    width: 100%;
+    min-height: 30rem; /* ~480px */
+  }
+  .pc-preview {
+    min-height: 240px;
+  }
+  .pc-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Mobile: 1 card fills viewport width, arrows beside */
+@media (max-width: 480px) {
+  .pc-wrapper {
+    gap: 0.5rem;
+  }
+  .pc-card {
+    min-height: 26rem; /* ~416px */
+  }
+  .pc-preview {
+    min-height: 200px;
+  }
+  .pc-title {
+    font-size: 1rem;
+  }
+  .pc-visit-btn {
+    font-size: 0.7rem;
+    padding: 0.35rem 0.85rem;
+  }
+}
+
+/* =========================================================
+      CONTACT FORM v3 - Dual-mode · Floating labels · Toast
+   ========================================================= */
+
+/* -- Card -- */
+.cf-card {
+  max-width: min(900px, 90%);
+  margin: 0 auto;
+  padding: 2.5rem 2.75rem;
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* -- Switcher -- */
+.cf-switcher {
+  display: flex;
+  justify-content: center;
+}
+
+.cf-switcher-track {
+  position: relative;
+  display: flex;
+  background: rgba(var(--accent-rgb), 0.06);
+  border: 1px solid var(--border-dark);
+  border-radius: 999px;
+  padding: 4px;
+  width: 280px;
+}
+
+.cf-tab-pill {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  height: calc(100% - 8px);
+  background: var(--glass-dark);
+  border-radius: 999px;
+  border: 1px solid var(--border-dark);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  transition: transform 0.55s cubic-bezier(0.34, 1.4, 0.64, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cf-tab {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: none;
+  background: transparent;
+  color: var(--text-dark);
+  cursor: pointer;
+  opacity: 0.5;
+  transition:
+    opacity 0.35s ease,
+    color 0.35s ease;
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+.cf-tab i {
+  font-size: 0.9rem;
+}
+.cf-tab--active {
+  opacity: 1;
+  color: var(--accent-dark);
+}
+
+/* -- Form layout -- */
+.cf-form {
+  display: flex;
+  flex-direction: column;
+  /* Base gap between rows - padding-bottom on every row adds the
+     error-reservation space on top of this */
+  gap: 0.75rem;
+}
+
+/* -- Shared field-row token ------------------------------------------
+   Every row that contains fields with absolute error spans MUST have
+   the same padding-bottom so the error zone is identical everywhere.
+   Formula: error-offset(0.28rem) + error-line-height(~1rem) + breathing(0.52rem) = 1.8rem */
+.cf-pair-row,
+.cf-subject-block--in,
+.cf-field-row {
+  padding-bottom: 1.8rem;
+}
+
+/* Row 1 - two equal columns */
+.cf-pair-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+/* Right-column partner: stacked options, cross-fade */
+.cf-partner-col {
+  position: relative;
+  /* height matches one floating-label input */
+  height: 3.55rem;
+  /* Must be visible so absolute error spans below the input aren't clipped */
+  overflow: visible;
+}
+
+.cf-partner-opt {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition:
+    opacity 0.42s ease,
+    transform 0.42s cubic-bezier(0.34, 1.15, 0.64, 1);
+}
+
+.cf-partner-opt--active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Row 2 - Subject (mail-only, animated) */
+.cf-subject-block {
+  overflow: hidden;
+  transition:
+    max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.5s ease,
+    transform 0.5s cubic-bezier(0.34, 1.15, 0.64, 1),
+    margin-top 0.5s ease;
+}
+
+.cf-subject-block--in {
+  max-height: 7rem;
+  overflow: visible;
+  opacity: 1;
+  transform: translateY(0);
+  margin-top: 0;
+}
+
+.cf-subject-block--out {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-8px);
+  margin-top: -1.5rem;
+  pointer-events: none;
+}
+
+/* -- Floating label field -- */
+.cf-field {
+  position: relative;
+}
+
+.cf-field input,
+.cf-field textarea {
+  width: 100%;
+  padding: 1.45rem 1rem 0.55rem;
+  background: rgba(var(--accent-rgb), 0.04);
+  border: 1.5px solid var(--border-dark);
+  border-radius: 12px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  outline: none;
+  resize: none;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+.cf-field input:focus,
+.cf-field textarea:focus {
+  border-color: var(--accent-dark);
+  box-shadow: 0 0 0 3.5px rgba(var(--accent-rgb), 0.12);
+  background: rgba(var(--accent-rgb), 0.07);
+}
+
+/* Floating label */
+.cf-field label {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: rgba(var(--accent-rgb), 0.55);
+  pointer-events: none;
+  transition:
+    top 0.22s ease,
+    transform 0.22s ease,
+    font-size 0.22s ease,
+    font-weight 0.22s ease,
+    color 0.22s ease;
+  white-space: nowrap;
+}
+
+.cf-field input:focus + label,
+.cf-field input:not(:placeholder-shown) + label {
+  top: 0.42rem;
+  transform: translateY(0);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+}
+
+/* Textarea label starts near top */
+.cf-field--textarea label {
+  top: 1.25rem;
+  transform: translateY(0);
+}
+
+.cf-field--textarea textarea:focus + label,
+.cf-field--textarea textarea:not(:placeholder-shown) + label {
+  top: 0.38rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+}
+
+/* Error state */
+.cf-field.cf-error input,
+.cf-field.cf-error textarea {
+  border-color: #e53935 !important;
+  box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.14) !important;
+  background: rgba(229, 57, 53, 0.04) !important;
+}
+.cf-field.cf-error label {
+  color: #e53935;
+}
+
+/* -- Inline field error message --------------------------------------
+   CRITICAL: position:absolute means the span is OUT OF FLOW.
+   It never inflates .cf-field's height, so label top:50% always
+   hits the true vertical centre of the input. */
+.cf-field-error {
+  position: absolute;
+  top: calc(100% + 0.28rem);
+  left: 0;
+  width: 100%;
+  font-size: 0.71rem;
+  font-weight: 600;
+  color: #e53935;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-3px);
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+.cf-field-error.cf-field-error--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Partner-column errors anchor below the fixed-height input zone */
+.cf-field-error--partner {
+  /* .cf-partner-col is the positioned ancestor (position:relative) */
+  position: absolute;
+  top: calc(3.55rem + 0.28rem);
+  left: 0;
+  width: 100%;
+}
+
+/* Shake */
+@keyframes cf-shake {
+  0% {
+    transform: translateX(0);
+  }
+  18% {
+    transform: translateX(-7px);
+  }
+  36% {
+    transform: translateX(7px);
+  }
+  54% {
+    transform: translateX(-4px);
+  }
+  72% {
+    transform: translateX(4px);
+  }
+  90% {
+    transform: translateX(-1px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.cf-shake {
+  animation: cf-shake 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* -- Submit row (centred) -- */
+.cf-submit-row {
+  display: flex;
+  justify-content: center;
+}
+
+/* -- Submit button -- */
+.cf-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 2.5rem;
+  background: var(--glass-dark);
+  color: var(--text-dark);
+  border: 1px solid var(--border-dark);
+  border-radius: 50px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    all 0.5s var(--spring),
+    background-color 0.4s ease,
+    border-color 0.4s ease,
+    color 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glow ripple */
+.cf-submit-btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--shadow-color), transparent);
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.5s ease,
+    height 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.cf-submit-btn:not(:disabled):hover::before {
+  width: 280px;
+  height: 280px;
+}
+
+/* Shimmer */
+.cf-submit-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -110%;
+  width: 65%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(var(--accent-rgb), 0.18) 50%,
+    transparent 100%
+  );
+  transform: skewX(-18deg);
+  transition: left 0.65s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.cf-submit-btn:not(:disabled):hover::after {
+  left: 160%;
+}
+
+.cf-submit-btn:not(:disabled):hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.25),
+    0 0 15px rgba(var(--accent-rgb), 0.25);
+}
+
+.cf-submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Success state */
+.cf-btn--success {
+  background: rgba(76, 175, 80, 0.18) !important;
+  border-color: rgba(76, 175, 80, 0.5) !important;
+  color: #43a047 !important;
+}
+
+/* -- Toast notification -- */
+.cf-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem 1rem 1.2rem;
+  border-radius: 14px;
+  min-width: 280px;
+  max-width: 380px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  /* Start off-screen to the right */
+  transform: translateX(calc(100% + 30px));
+  opacity: 0;
+  transition:
+    transform 0.48s cubic-bezier(0.34, 1.25, 0.64, 1),
+    opacity 0.38s ease;
+}
+
+/* Slide in */
+.cf-toast--in {
+  transform: translateX(0) !important;
+  opacity: 1 !important;
+}
+
+/* Colors per type */
+.cf-toast[data-type="success"] {
+  background: rgba(76, 175, 80, 0.12);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  color: #2e7d32;
+}
+.cf-toast[data-type="error"] {
+  background: rgba(229, 57, 53, 0.1);
+  border: 1px solid rgba(229, 57, 53, 0.28);
+  color: #c62828;
+}
+
+.cf-toast-icon {
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+
+.cf-toast-msg {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.cf-toast-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  opacity: 0.55;
+  padding: 0;
+  flex-shrink: 0;
+  color: inherit;
+  transition: opacity 0.2s ease;
+  line-height: 1;
+  margin-top: 0.05rem;
+}
+.cf-toast-close:hover {
+  opacity: 1;
+}
+
+/* -- Responsive -- */
+@media (max-width: 640px) {
+  .cf-card {
+    padding: 1.75rem 1.25rem;
+    gap: 1.35rem;
+  }
+
+  .cf-pair-row {
+    grid-template-columns: 1fr;
+    /* When stacked, gap = inter-row space (pb 1.8rem + form-gap 0.75rem)
+       so Name→Email/WA matches Subject→Message and all other row spacings. */
+    gap: calc(1.8rem + 0.75rem);
+  }
+
+  /* Partner col: restore natural flow on mobile */
+  .cf-partner-col {
+    position: relative;
+    height: 3.55rem;
+  }
+
+  .cf-switcher-track {
+    width: 240px;
+  }
+
+  .cf-toast {
+    right: 12px;
+    bottom: 12px;
+    min-width: calc(100vw - 24px);
+    max-width: calc(100vw - 24px);
+  }
 }

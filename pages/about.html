@@ -10,10 +10,10 @@
     />
     <meta name="author" content="Ubaid Ahmad" />
     <meta name="robots" content="index, follow" />
-    <link rel="icon" type="image/png" href="../assets/webpage-icon.png" />
+    <link rel="icon" type="image/png" href="../assets/favicon.png" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="About - Ubaid Ahmad" />
-    <meta property="og:image" content="../assets/ubaidahmad-img.jpg" />
+    <meta property="og:image" content="../assets/hero-profile-portrait.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,6 +28,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
     <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="stylesheet" href="../styles/about.css" />
   </head>
   <body>
     <!-- Page Loader -->
@@ -39,7 +40,7 @@
     <!-- Liquid Background -->
     <div class="liquid-bg"></div>
 
-    <!-- ── Floating Header ── -->
+    <!-- -- Floating Header -- -->
     <header class="glass-header">
       <div class="container-custom">
         <div class="header-content">
@@ -49,9 +50,9 @@
           <nav class="desktop-nav" aria-label="Main Navigation">
             <a href="../index.html">Home</a>
             <a href="./about.html" class="nav-active">About</a>
-            <a href="./projects.html">Projects</a>
+            <a href="../index.html#projects">Projects</a>
             <a href="./services.html">Services</a>
-            <a href="./contact.html">Contact</a>
+            <a href="../index.html#contact">Contact</a>
           </nav>
           <div class="header-actions">
             <button
@@ -90,23 +91,24 @@
           <div class="mobile-nav-group is-active">
             <a href="./about.html" class="mobile-nav-link active-page">About</a>
             <div class="mobile-subnav">
-              <a href="#timeline-title">Timeline</a>
+              <a href="#education-title">Education</a>
+              <a href="#certifications-title">Certifications</a>
               <a href="#philosophy-title">Philosophy</a>
               <a href="#currently-title">Right Now</a>
             </div>
           </div>
-          <a href="./projects.html" class="mobile-nav-link">Projects</a>
+          <a href="../index.html#projects" class="mobile-nav-link">Projects</a>
           <a href="./services.html" class="mobile-nav-link">Services</a>
-          <a href="./contact.html" class="mobile-nav-link">Contact</a>
+          <a href="../index.html#contact" class="mobile-nav-link">Contact</a>
         </nav>
       </div>
     </div>
 
-    <!-- ── A. Hero Bio Block ── -->
+    <!-- -- A. Hero Bio Block -- -->
     <section class="page-hero hero-animate" aria-labelledby="about-hero-title">
       <div class="container-custom">
         <img
-          src="../assets/ubaidahmad-img.jpg"
+          src="../assets/hero-profile-portrait.png"
           alt="Professional photo of Ubaid Ahmad"
           class="about-profile-img"
         />
@@ -114,22 +116,20 @@
           The Developer Behind the Portfolio
         </h1>
         <p class="page-hero-sub" style="margin-bottom: 1rem">
-          I started my Computer Science journey at the University of Swabi in
-          October 2023 with no freelance clients and a lot of curiosity about
-          what real-world software looked like. By early 2024, I landed my first
-          project-Muhammad Dawood's DevOps portfolio-and since then I've been
-          building full-stack MERN products and designing UI/UX experiences for
-          clients who need practical digital solutions. I care about writing
-          code that's easy to read, creating interfaces that feel clear, and
-          delivering projects on timelines that make sense.
+          I'm Ubaid Ahmad, a Computer Science student at the University of Swabi
+          with a deep passion for web development. My work bridges the gap
+          between code and design, focusing on clean architecture and intuitive
+          interfaces. I prioritize building systems that are both readable and
+          effortless to navigate, driven by a commitment to craft and technical
+          precision.
         </p>
         <p class="page-hero-sub" style="margin-bottom: 2rem">
-          I'm still learning every day, whether it's refining scalable
-          architectures, experimenting with bold design choices, or improving
-          how I collaborate with clients. Each project adds to my experience,
-          and I see every delivery as both a solution and a lesson. My journey
-          is ongoing, and I'm excited to keep growing into a developer who
-          balances technical depth with creative clarity.
+          I dedicate my days to studying and refining my engineering instincts
+          through constant experimentation. I enjoy exploring systems from data
+          structure to final screen rendering, valuing depth over shortcuts. My
+          goal is to grow into a purposeful developer by expanding my design
+          thinking. I believe in progress that compounds and aim to build
+          technology that solves real problems.
         </p>
         <a
           href="../assets/ubaid-ahmad-cv.pdf"
@@ -150,96 +150,288 @@
       </div>
     </section>
 
-    <!-- ── B. Visual Career Timeline ── -->
-    <section class="section" aria-labelledby="timeline-title">
+    <!-- -- B. Academic Journey Timeline -- -->
+    <section class="section" aria-labelledby="education-title">
       <div class="container-custom">
         <div class="section-wrapper" style="text-align: center">
-          <h2 id="timeline-title" class="section-title">Career Timeline</h2>
+          <h2
+            id="education-title"
+            class="section-title animate-on-scroll fade-in"
+          >
+            Academic Journey
+          </h2>
 
           <div class="timeline animate-on-scroll fade-in">
+            <!-- Matric / SSC -->
             <div class="timeline-item">
               <span class="timeline-dot"></span>
-              <span class="timeline-date">Oct 2023</span>
+              <span class="timeline-date">2019 – 2021</span>
               <div class="timeline-content">
-                <h4>Started CS Degree</h4>
-                <p>
-                  Enrolled at University of Swabi - began building foundations
-                  in C++, Python, and computer science theory.
+                <h4>Matric / SSC</h4>
+                <p class="edu-institution">
+                  <i
+                    class="fas fa-school"
+                    style="font-size: 0.78rem; opacity: 0.8"
+                  ></i>
+                  The Readers School &middot; Swabi, KPK
                 </p>
+                <p
+                  style="
+                    font-size: 0.83rem;
+                    opacity: 0.65;
+                    color: var(--text-dark);
+                    margin-bottom: 0.4rem;
+                  "
+                >
+                  I completed my secondary education in science with high marks,
+                  establishing a strong foundation for my future technical
+                  studies.
+                </p>
+                <div class="edu-meta">
+                  <span class="edu-badge"
+                    ><i class="fas fa-star" style="font-size: 0.65rem"></i> 1048
+                    / 1100</span
+                  >
+                  <span class="edu-badge field"
+                    ><i class="fas fa-flask" style="font-size: 0.65rem"></i>
+                    Science</span
+                  >
+                </div>
               </div>
             </div>
 
+            <!-- HSSC / Intermediate -->
             <div class="timeline-item">
               <span class="timeline-dot"></span>
-              <span class="timeline-date">Early 2024</span>
+              <span class="timeline-date">2021 – 2023</span>
               <div class="timeline-content">
-                <h4>First Freelance Client</h4>
-                <p>
-                  Delivered Muhammad Dawood's DevOps portfolio - first real
-                  project, first real deadline, first five-star review.
+                <h4>HSSC / Intermediate</h4>
+                <p class="edu-institution">
+                  <i
+                    class="fas fa-building-columns"
+                    style="font-size: 0.78rem; opacity: 0.8"
+                  ></i>
+                  The Orbit College for Boys, Hill View Campus &middot; Swabi,
+                  KPK
                 </p>
+                <p
+                  style="
+                    font-size: 0.83rem;
+                    opacity: 0.65;
+                    color: var(--text-dark);
+                    margin-bottom: 0.4rem;
+                  "
+                >
+                  I pursued a pre-medical curriculum that sharpened my
+                  analytical thinking and disciplined approach to mastering
+                  complex academic challenges.
+                </p>
+                <div class="edu-meta">
+                  <span class="edu-badge"
+                    ><i class="fas fa-star" style="font-size: 0.65rem"></i> 883
+                    / 1100</span
+                  >
+                  <span class="edu-badge field"
+                    ><i class="fas fa-heartbeat" style="font-size: 0.65rem"></i>
+                    Pre-Medical</span
+                  >
+                </div>
               </div>
             </div>
 
+            <!-- Bachelor's -->
             <div class="timeline-item">
               <span class="timeline-dot"></span>
-              <span class="timeline-date">Mid 2024</span>
+              <span class="timeline-date">2023 – Present</span>
               <div class="timeline-content">
-                <h4>StudyStation Web Transition</h4>
-                <p>
-                  Developed and deployed a multi-page student resource hub on
-                  GitHub, transitioning the WhatsApp channel into a responsive
-                  web experience.
+                <h4>
+                  Bachelor of Science
+                  <span
+                    class="edu-current-dot"
+                    style="margin-left: 0.5rem"
+                    title="Currently enrolled"
+                  ></span>
+                </h4>
+                <p class="edu-institution">
+                  <i
+                    class="fas fa-graduation-cap"
+                    style="font-size: 0.78rem; opacity: 0.8"
+                  ></i>
+                  University of Swabi &middot; KPK
                 </p>
+                <p
+                  style="
+                    font-size: 0.83rem;
+                    opacity: 0.65;
+                    color: var(--text-dark);
+                    margin-bottom: 0.4rem;
+                  "
+                >
+                  I am currently studying computer science with a focus on
+                  building efficient web systems and mastering modern
+                  engineering principles.
+                </p>
+                <div class="edu-meta">
+                  <span class="edu-badge"
+                    ><i
+                      class="fas fa-chart-line"
+                      style="font-size: 0.65rem"
+                    ></i>
+                    CGPA 3.43 / 4.0</span
+                  >
+                  <span class="edu-badge field"
+                    ><i class="fas fa-microchip" style="font-size: 0.65rem"></i>
+                    Computer Science</span
+                  >
+                </div>
               </div>
             </div>
 
-            <div class="timeline-item">
-              <span class="timeline-dot"></span>
-              <span class="timeline-date">Late 2024</span>
-              <div class="timeline-content">
-                <h4>Expanded into UI/UX</h4>
-                <p>
-                  Started designing in Figma seriously - user flows,
-                  high-fidelity prototypes, and design systems alongside
-                  development work.
-                </p>
-              </div>
-            </div>
-
-            <div class="timeline-item">
-              <span class="timeline-dot"></span>
-              <span class="timeline-date">Early 2025</span>
-              <div class="timeline-content">
-                <h4>Hadaf Immigration Web Development</h4>
-                <p>
-                  Engineered a 2-3 page production website. Project remains
-                  live, client-approved, and operational via GitHub deployment.
-                </p>
-              </div>
-            </div>
-
-            <div class="timeline-item">
-              <span class="timeline-dot"></span>
-              <span class="timeline-date">Present</span>
-              <div class="timeline-content">
-                <h4>MERN + UI/UX</h4>
-                <p>
-                  Building full-stack MERN products and polished UI/UX
-                  experiences - always shipping, always learning.
-                </p>
-              </div>
-            </div>
+            <!-- Future-ready placeholder (hidden via CSS, ensures layout never breaks) -->
+            <!-- ADD NEW EDUCATION ENTRIES ABOVE THIS LINE -->
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ── C. Tech Philosophy Block ── -->
+    <!-- -- B2. Certifications -- -->
+    <section class="section" aria-labelledby="certifications-title">
+      <div class="container-custom">
+        <div class="section-wrapper" style="text-align: center">
+          <h2
+            id="certifications-title"
+            class="section-title animate-on-scroll fade-in"
+          >
+            Certifications
+          </h2>
+
+          <div class="cert-grid">
+            <div
+              class="cert-card glass-card animate-on-scroll fade-in"
+              role="button"
+              tabindex="0"
+              aria-label="View Introduction to Jupyter certificate"
+              data-cert-name="Introduction to Jupyter"
+              data-cert-institute="365 DataScience"
+              data-cert-date="November 04, 2024"
+              data-cert-img="../assets/credentials/Introduction to Jupyter.jpg"
+            >
+              <div class="cert-icon-wrap">
+                <i class="fa-solid fa-laptop"></i>
+              </div>
+              <p class="cert-name">Introduction to Jupyter</p>
+              <p class="cert-institute">365 DataScience</p>
+              <span class="cert-date-badge">November 04, 2024</span>
+              <p class="cert-view-hint">
+                <i class="fas fa-expand-alt" style="font-size: 0.65rem"></i>
+                View Certificate
+              </p>
+            </div>
+
+            <div
+              class="cert-card glass-card animate-on-scroll fade-in"
+              role="button"
+              tabindex="0"
+              aria-label="View Legacy Responsive Web Design V8 certificate"
+              data-cert-name="Legacy Responsive Web Design V8"
+              data-cert-institute="freeCodeCamp"
+              data-cert-date="April 6, 2026"
+              data-cert-img="../assets/credentials/Legacy Responsive Web Design V8.png"
+            >
+              <div class="cert-icon-wrap">
+                <i class="fas fa-certificate"></i>
+              </div>
+              <p class="cert-name">Legacy Responsive Web Design V8</p>
+              <p class="cert-institute">freeCodeCamp</p>
+              <span class="cert-date-badge">April 6, 2026</span>
+              <p class="cert-view-hint">
+                <i class="fas fa-expand-alt" style="font-size: 0.65rem"></i>
+                View Certificate
+              </p>
+            </div>
+
+            <div
+              class="cert-card glass-card animate-on-scroll fade-in"
+              role="button"
+              tabindex="0"
+              aria-label="View JavaScript Programming certificate"
+              data-cert-name="JavaScript Programming"
+              data-cert-institute="freeCodeCamp"
+              data-cert-date="Coming Soon"
+              data-cert-img=""
+            >
+              <div class="cert-icon-wrap"><i class="fas fa-code"></i></div>
+              <p class="cert-name">JavaScript Programming</p>
+              <p class="cert-institute">freeCodeCamp</p>
+              <span class="cert-date-badge">Coming Soon</span>
+              <p class="cert-view-hint">
+                <i class="fas fa-expand-alt" style="font-size: 0.65rem"></i>
+                View Certificate
+              </p>
+            </div>
+
+            <div
+              class="cert-card glass-card animate-on-scroll fade-in"
+              role="button"
+              tabindex="0"
+              aria-label="View Responsive Web Design certificate"
+              data-cert-name="Responsive Web Design"
+              data-cert-institute="freeCodeCamp"
+              data-cert-date="Coming Soon"
+              data-cert-img=""
+            >
+              <div class="cert-icon-wrap">
+                <i class="fa-solid fa-mobile-button"></i>
+              </div>
+              <p class="cert-name">Responsive Web Design</p>
+              <p class="cert-institute">freeCodeCamp</p>
+              <span class="cert-date-badge">Coming Soon</span>
+              <p class="cert-view-hint">
+                <i class="fas fa-expand-alt" style="font-size: 0.65rem"></i>
+                View Certificate
+              </p>
+            </div>
+
+            <!-- ADD NEW CERTIFICATION CARDS ABOVE THIS LINE -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -- Certificate Modal -- -->
+    <div
+      id="certModal"
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="certModalTitle"
+    >
+      <div class="modal-content glass-card">
+        <button
+          class="modal-close"
+          id="closeCertModal"
+          aria-label="Close certificate modal"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+        <div class="cert-modal-header">
+          <h3 class="cert-modal-title" id="certModalTitle">Certificate</h3>
+          <p class="cert-modal-sub" id="certModalSub"></p>
+        </div>
+        <div class="cert-modal-img-wrap" id="certModalBody">
+          <!-- content injected by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- -- C. Tech Philosophy Block -- -->
     <section class="section" aria-labelledby="philosophy-title">
       <div class="container-custom">
         <div class="section-wrapper" style="text-align: center">
-          <h2 id="philosophy-title" class="section-title">
+          <h2
+            id="philosophy-title"
+            class="section-title animate-on-scroll fade-in"
+          >
             How I Think About Work
           </h2>
 
@@ -276,11 +468,16 @@
       </div>
     </section>
 
-    <!-- ── D. Currently Block ── -->
+    <!-- -- D. Currently Block -- -->
     <section class="section" aria-labelledby="currently-title">
       <div class="container-custom">
         <div class="section-wrapper" style="text-align: center">
-          <h2 id="currently-title" class="section-title">Right Now</h2>
+          <h2
+            id="currently-title"
+            class="section-title animate-on-scroll fade-in"
+          >
+            Right Now
+          </h2>
 
           <div class="currently-grid">
             <div class="currently-card glass-card animate-on-scroll fade-in">
@@ -312,7 +509,7 @@
       </div>
     </section>
 
-    <!-- ── E. CTA Banner ── -->
+    <!-- -- E. CTA Banner -- -->
     <section class="section" aria-label="Call to Action">
       <div class="container-custom">
         <div class="section-wrapper" style="text-align: center">
@@ -331,38 +528,34 @@
       </div>
     </section>
 
-    <!-- ── Footer ── -->
+    <!-- -- Footer -- -->
     <footer class="glass-footer">
       <div class="container-custom">
         <div class="footer-upgraded">
           <nav class="footer-quick-links" aria-label="Footer Navigation">
             <a href="../index.html">Home</a>
             <a href="./about.html">About</a>
-            <a href="./projects.html">Projects</a>
+            <a href="../index.html#projects">Projects</a>
             <a href="./services.html">Services</a>
-            <a href="./contact.html">Contact</a>
+            <a href="../index.html#contact">Contact</a>
           </nav>
           <div class="footer-availability">
             <i class="fas fa-check-circle footer-avail-icon"></i>
             <span>Currently accepting new projects</span>
           </div>
           <p class="footer-copyright">
-            &copy; 2025 Ubaid Ahmad &middot; Built with craft, not templates.
+            &copy; 2026 Ubaid Ahmad &middot; Built with craft, not templates.
           </p>
         </div>
       </div>
     </footer>
 
-    <!-- Available for Work Badge - icon only -->
-    <a
-      href="mailto:iubaidahmad303@gmail.com?subject=Quick%20Enquiry%20--%20About%20Page&body=Hi%20Ubaid%2C%0A%0AI%20was%20reading%20your%20About%20page%20and%20I%20would%20love%20to%20discuss%20a%20project%20with%20you.%0A%0A---%20What%20I%20Need%20---%0AProject%20type%3A%20%0ATimeline%3A%20%0ABudget%3A%20%0A%0ALooking%20forward%20to%20hearing%20from%20you.%0A%0ABest%20regards%2C%0A%5BYour%20Name%5D"
-      class="available-badge"
-      aria-label="Available for work"
-    >
-      <i class="fas fa-briefcase"></i>
-    </a>
-
     <script src="../scripts/projects-data.js"></script>
-    <script src="../scripts/script.js"></script>
+    <script src="../scripts/skills-data.js"></script>
+    <script src="../scripts/experience-data.js"></script>
+    <script src="../scripts/clients-data.js"></script>
+    <script src="../scripts/testimonials-data.js"></script>
+    <script src="../scripts/app.js"></script>
+    <script src="../scripts/certification-modal-logic.js"></script>
   </body>
 </html>

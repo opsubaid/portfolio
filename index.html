@@ -19,22 +19,22 @@
     <meta name="author" content="Ubaid Ahmad" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#0f0f1a" />
-    <link rel="canonical" href="https://bugcurator.github.io/" />
+    <link rel="canonical" href="https://opsubaid.github.io/" />
 
-    <link rel="icon" type="image/png" href="./assets/webpage-icon.png" />
-    <link rel="apple-touch-icon" href="./assets/webpage-icon.png" />
+    <link rel="icon" type="image/png" href="./assets/favicon.png" />
+    <link rel="apple-touch-icon" href="./assets/favicon.png" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://bugcurator.github.io/" />
+    <meta property="og:url" content="https://opsubaid.github.io/" />
     <meta
       property="og:title"
       content="Ubaid Ahmad | Full-Stack MERN Developer &amp; UI/UX Designer"
     />
     <meta
       property="og:description"
-      content="Full-Stack MERN Developer | Agentic AI &amp; UI/UX Design | Building fast, clean digital products."
+      content="Full-Stack MERN Developer | UI/UX Design | Building fast, clean digital products."
     />
-    <meta property="og:image" content="./assets/ubaidahmad-img.jpg" />
+    <meta property="og:image" content="./assets/hero-profile-portrait.png" />
     <meta property="og:site_name" content="Ubaid Ahmad Portfolio" />
     <meta property="og:locale" content="en_US" />
 
@@ -44,18 +44,18 @@
       name="twitter:title"
       content="Ubaid Ahmad | Full-Stack MERN Developer &amp; UI/UX Designer"
     />
-    <meta name="twitter:image" content="./assets/ubaidahmad-img.jpg" />
+    <meta name="twitter:image" content="./assets/hero-profile-portrait.png" />
 
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Ubaid Ahmad",
-        "url": "https://bugcurator.github.io/",
+        "url": "https://opsubaid.github.io/",
         "jobTitle": "Full-Stack MERN Developer & UI/UX Designer",
         "email": "iubaidahmad303@gmail.com",
         "sameAs": [
-          "https://github.com/ubaidwebdeveloper",
+          "https://github.com/opsubaid",
           "https://www.linkedin.com/in/ubaidwebdeveloper"
         ]
       }
@@ -85,7 +85,7 @@
     <!-- Liquid Background -->
     <div class="liquid-bg"></div>
 
-    <!-- ── Floating Header ── -->
+    <!-- -- Floating Header -- -->
     <header class="glass-header">
       <div class="container-custom">
         <div class="header-content">
@@ -93,9 +93,9 @@
           <nav class="desktop-nav" aria-label="Main Navigation">
             <a href="#hero" class="nav-active">Home</a>
             <a href="./pages/about.html">About</a>
-            <a href="./pages/projects.html">Projects</a>
+            <a href="#projects">Projects</a>
             <a href="./pages/services.html">Services</a>
-            <a href="./pages/contact.html">Contact</a>
+            <a href="#contact">Contact</a>
           </nav>
           <div class="header-actions">
             <!-- Theme Toggle -->
@@ -143,14 +143,14 @@
             </div>
           </div>
           <a href="./pages/about.html" class="mobile-nav-link">About</a>
-          <a href="./pages/projects.html" class="mobile-nav-link">Projects</a>
+          <a href="#projects" class="mobile-nav-link">Projects</a>
           <a href="./pages/services.html" class="mobile-nav-link">Services</a>
-          <a href="./pages/contact.html" class="mobile-nav-link">Contact</a>
+          <a href="#contact" class="mobile-nav-link">Contact</a>
         </nav>
       </div>
     </div>
 
-    <!-- ── Hero Section ── -->
+    <!-- -- Hero Section -- -->
     <section
       id="hero"
       class="hero-section hero-animate"
@@ -171,7 +171,7 @@
                 <!-- FRONT: profile photo -->
                 <div class="coin-front">
                   <img
-                    src="./assets/ubaidahmad-img.jpg"
+                    src="./assets/hero-profile-portrait.png"
                     alt="Professional photo of Ubaid Ahmad"
                     draggable="false"
                   />
@@ -218,7 +218,7 @@
       </div>
     </section>
 
-    <!-- ── Stats Counters ── -->
+    <!-- -- Stats Counters -- -->
     <section id="counters" class="section" style="padding: 2rem 0">
       <div class="container-custom">
         <div class="section-wrapper" style="text-align: center">
@@ -244,11 +244,11 @@
       </div>
     </section>
 
-    <!-- ── Skills Section ── -->
+    <!-- -- Skills Section -- -->
     <section id="skills" class="section" aria-labelledby="skills-title">
       <div class="container-custom">
         <div class="section-wrapper">
-          <h2 id="skills-title" class="section-title">
+          <h2 id="skills-title" class="section-title animate-on-scroll fade-in">
             Core Skills &amp; Technologies
           </h2>
           <div
@@ -262,15 +262,18 @@
       </div>
     </section>
 
-    <!-- ── Experience Section ── -->
+    <!-- -- Experience Section -- -->
     <section id="experience" class="section" aria-labelledby="experience-title">
       <div class="container-custom">
         <div class="section-wrapper">
-          <h2 id="experience-title" class="section-title">
+          <h2
+            id="experience-title"
+            class="section-title animate-on-scroll fade-in"
+          >
             Professional Experience
           </h2>
           <div id="experienceTimeline" class="experience-timeline"></div>
-          <div class="experience-btn-group">
+          <div class="experience-btn-group animate-on-scroll fade-in">
             <button
               id="loadMoreExperience"
               class="load-more-btn glow-hover"
@@ -292,46 +295,63 @@
       </div>
     </section>
 
-    <!-- ── Projects Section ── -->
-    <section id="projects" class="section" aria-labelledby="projects-title">
+    <!-- -- Projects Section (Scroll-Preview Carousel) -- -->
+    <section
+      id="projects"
+      class="section projects-carousel-section"
+      aria-labelledby="projects-title"
+    >
       <div class="container-custom">
         <div class="section-wrapper">
-          <h2 id="projects-title" class="section-title">Featured Projects</h2>
-          <div id="projectsGrid" class="projects-grid"></div>
-          <div class="view-all-projects-wrap animate-on-scroll fade-in">
-            <a
-              href="./pages/projects.html"
-              class="cta-button glow-hover"
-              aria-label="View all projects"
+          <h2
+            id="projects-title"
+            class="section-title animate-on-scroll fade-in"
+          >
+            Featured Projects
+          </h2>
+
+          <!-- Carousel Wrapper -->
+          <div
+            class="pc-wrapper animate-on-scroll slide-up"
+            aria-label="Projects carousel"
+          >
+            <!-- Left Arrow -->
+            <button
+              class="pc-arrow pc-arrow--left"
+              id="pcPrev"
+              aria-label="Previous project"
             >
-              View All Projects <i class="fas fa-arrow-right"></i>
-            </a>
+              <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <!-- Track: holds all cards, only 3 visible at a time -->
+            <div class="pc-viewport" id="pcViewport">
+              <div class="pc-track" id="pcTrack">
+                <!-- Cards injected by JS -->
+              </div>
+            </div>
+
+            <!-- Right Arrow -->
+            <button
+              class="pc-arrow pc-arrow--right"
+              id="pcNext"
+              aria-label="Next project"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
           </div>
+
+          <!-- Dot indicators -->
+          <div
+            class="pc-dots animate-on-scroll fade-in"
+            id="pcDots"
+            aria-label="Project navigation dots"
+          ></div>
         </div>
       </div>
     </section>
 
-    <!-- Project Modal -->
-    <div
-      id="projectModal"
-      class="modal"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Project Details"
-    >
-      <div class="modal-content glass-card">
-        <button
-          class="modal-close"
-          id="closeProjectModal"
-          aria-label="Close project modal"
-        >
-          <i class="fas fa-times"></i>
-        </button>
-        <div id="projectModalContent"></div>
-      </div>
-    </div>
-
-    <!-- ── Clients & Collaborations Section ── -->
+    <!-- -- Clients & Collaborations Section -- -->
     <!-- <section id="clients" class="section" aria-labelledby="clients-title">
       <div class="container-custom">
         <div class="section-wrapper">
@@ -356,11 +376,13 @@
       </div>
     </section> -->
 
-    <!-- ── Collaboration Section ── -->
+    <!-- -- Collaboration Section -- -->
     <section id="collaboration" class="section" aria-labelledby="collab-title">
       <div class="container-custom">
         <div class="section-wrapper">
-          <h2 id="collab-title" class="section-title">Open to Collaboration</h2>
+          <h2 id="collab-title" class="section-title animate-on-scroll fade-in">
+            Open to Collaboration
+          </h2>
           <p class="connect-description animate-on-scroll fade-in">
             Whether you need a development partner or a UI/UX collaborator -
             let's build something meaningful together.
@@ -387,7 +409,7 @@
       </div>
     </section>
 
-    <!-- ── Testimonials Section ── -->
+    <!-- -- Testimonials Section -- -->
     <section
       id="testimonials"
       class="section"
@@ -395,21 +417,13 @@
     >
       <div class="container-custom">
         <div class="section-wrapper">
-          <h2 id="testimonials-title" class="section-title">
+          <h2
+            id="testimonials-title"
+            class="section-title animate-on-scroll fade-in"
+          >
             What Clients Say
           </h2>
           <div id="testimonialsGrid" class="testimonials-grid"></div>
-
-          <!-- Social Proof CTA -->
-          <div class="testimonials-cta animate-on-scroll fade-in">
-            <p>Want results like these?</p>
-            <a
-              href="mailto:iubaidahmad303@gmail.com?subject=Reaching%20Out%20--%20Your%20Work%20Speaks%20for%20Itself&body=Hi%20Ubaid%2C%0A%0AI%20just%20read%20the%20testimonials%20on%20your%20homepage%20and%20I%20would%20love%20to%20discuss%20a%20project%20with%20you.%0A%0A---%20What%20I%20Need%20---%0AProject%20type%3A%20%0ATimeline%3A%20%0ABudget%3A%20%0A%0ALooking%20forward%20to%20hearing%20from%20you.%0A%0ABest%20regards%2C%0A%5BYour%20Name%5D"
-              class="testimonials-cta-btn"
-            >
-              <i class="fas fa-envelope"></i> Get in Touch
-            </a>
-          </div>
         </div>
       </div>
     </section>
@@ -434,46 +448,188 @@
       </div>
     </div>
 
-    <!-- ── Connect Section ── -->
-    <section id="connect" class="section" aria-labelledby="connect-title">
+    <!-- -- Contact Form Section -- -->
+    <section id="contact" class="section" aria-labelledby="contact-title">
       <div class="container-custom">
         <div class="section-wrapper">
-          <h2 id="connect-title" class="section-title">Let's Work Together</h2>
+          <h2
+            id="contact-title"
+            class="section-title animate-on-scroll fade-in"
+          >
+            Let's Work Together
+          </h2>
           <p class="connect-description animate-on-scroll fade-in">
-            Ready to bring your ideas to life? Let's collaborate and create
-            something extraordinary.
+            Have a project in mind? Fill in the form and I'll get back to you
+            within 24 hours on weekdays.
           </p>
-          <div class="connect-buttons animate-on-scroll slide-up">
-            <a
-              href="mailto:iubaidahmad303@gmail.com?subject=Project%20Inquiry%20--%20Let%27s%20Build%20Something&body=Hi%20Ubaid%2C%0A%0AI%20visited%20the%20Let%27s%20Work%20Together%20section%20and%20I%20would%20love%20to%20discuss%20a%20project%20with%20you.%0A%0A---%20What%20I%20Need%20---%0AProject%20type%3A%20%0ATimeline%3A%20%0ABudget%3A%20%0A%0ALooking%20forward%20to%20hearing%20from%20you.%0A%0ABest%20regards%2C%0A%5BYour%20Name%5D"
-              class="connect-btn glass-card glow-hover"
-              aria-label="Email Ubaid Ahmad"
-            >
-              <i class="fas fa-envelope"></i>
-              <span>Email Me</span>
-            </a>
-            <a
-              href="https://wa.me/+923360973607?text=Hi%20Ubaid%2C%0A%0AI came across your portfolio and wanted to get in touch. I would like to discuss or ask about your work, services, or any opportunities.%0A%0ALooking forward to your reply.%0A%0ABest%20regards%2C%0A[Your%20Name]"
-              target="_blank"
-              class="connect-btn glass-card glow-hover"
-              aria-label="Connect via WhatsApp"
-            >
-              <i class="fab fa-whatsapp"></i>
-              <span>WhatsApp</span>
-            </a>
+
+          <div class="cf-card glass-card animate-on-scroll slide-up">
+            <!-- -- Mode Switcher -- -->
+            <div class="cf-switcher" role="tablist" aria-label="Contact method">
+              <div class="cf-switcher-track">
+                <button
+                  class="cf-tab cf-tab--active"
+                  data-mode="mail"
+                  role="tab"
+                  aria-selected="true"
+                >
+                  <i class="fas fa-envelope"></i><span>Mail</span>
+                </button>
+                <button
+                  class="cf-tab"
+                  data-mode="whatsapp"
+                  role="tab"
+                  aria-selected="false"
+                >
+                  <i class="fab fa-whatsapp"></i><span>WhatsApp</span>
+                </button>
+                <div class="cf-tab-pill" aria-hidden="true"></div>
+              </div>
+            </div>
+
+            <!-- -- Single Form -- -->
+            <form id="contactForm" class="cf-form" novalidate>
+              <!-- Row 1: Full Name (50%) + mode-specific partner (50%) -->
+              <div class="cf-pair-row">
+                <div class="cf-field">
+                  <input
+                    type="text"
+                    id="cf-name"
+                    name="name"
+                    placeholder=" "
+                    autocomplete="name"
+                    aria-describedby="cf-name-error"
+                  />
+                  <label for="cf-name">Full Name</label>
+                  <span
+                    class="cf-field-error"
+                    id="cf-name-error"
+                    aria-live="polite"
+                  ></span>
+                </div>
+                <!-- Right column switches between Email and WA Number -->
+                <div class="cf-partner-col">
+                  <div
+                    class="cf-partner-opt cf-partner-opt--active"
+                    id="cfEmailOpt"
+                  >
+                    <div class="cf-field">
+                      <input
+                        type="email"
+                        id="cf-email"
+                        name="email"
+                        placeholder=" "
+                        autocomplete="email"
+                        aria-describedby="cf-email-error"
+                      />
+                      <label for="cf-email">Email</label>
+                    </div>
+                  </div>
+                  <div class="cf-partner-opt" id="cfContactOpt">
+                    <div class="cf-field">
+                      <input
+                        type="tel"
+                        id="cf-contact"
+                        name="contact"
+                        placeholder=" "
+                        autocomplete="tel"
+                        aria-describedby="cf-contact-error"
+                      />
+                      <label for="cf-contact">WhatsApp Number</label>
+                    </div>
+                  </div>
+                  <!-- Errors sit outside the absolute opts — only one shows at a time -->
+                  <span
+                    class="cf-field-error cf-field-error--partner"
+                    id="cf-email-error"
+                    aria-live="polite"
+                  ></span>
+                  <span
+                    class="cf-field-error cf-field-error--partner"
+                    id="cf-contact-error"
+                    aria-live="polite"
+                  ></span>
+                </div>
+              </div>
+
+              <!-- Row 2: Subject (mail only, full width, animated) -->
+              <div
+                class="cf-subject-block cf-subject-block--in"
+                id="cfSubjectBlock"
+              >
+                <div class="cf-field">
+                  <input
+                    type="text"
+                    id="cf-subject"
+                    name="subject"
+                    placeholder=" "
+                    aria-describedby="cf-subject-error"
+                  />
+                  <label for="cf-subject">Subject</label>
+                  <span
+                    class="cf-field-error"
+                    id="cf-subject-error"
+                    aria-live="polite"
+                  ></span>
+                </div>
+              </div>
+
+              <!-- Row 3: Message (always, full width) -->
+              <div class="cf-field-row">
+                <div class="cf-field cf-field--textarea">
+                  <textarea
+                    id="cf-message"
+                    name="message"
+                    placeholder=" "
+                    rows="5"
+                    aria-describedby="cf-message-error"
+                  ></textarea>
+                  <label for="cf-message">Message</label>
+                  <span
+                    class="cf-field-error"
+                    id="cf-message-error"
+                    aria-live="polite"
+                  ></span>
+                </div>
+              </div>
+
+              <!-- Submit — centred -->
+              <div class="cf-submit-row">
+                <button
+                  type="submit"
+                  class="cf-submit-btn glow-hover"
+                  id="cfSubmitBtn"
+                >
+                  <i class="fas fa-paper-plane" id="cfBtnIcon"></i>
+                  <span id="cfBtnText">Send Message</span>
+                </button>
+              </div>
+            </form>
           </div>
+          <!-- /.cf-card -->
         </div>
       </div>
     </section>
 
-    <!-- ── Social Section ── -->
+    <!-- -- Toast notification (fixed, bottom-right) -- -->
+    <div class="cf-toast" id="cfToast" role="alert" aria-live="polite" hidden>
+      <i class="cf-toast-icon" id="cfToastIcon"></i>
+      <p class="cf-toast-msg" id="cfToastMsg"></p>
+      <button class="cf-toast-close" id="cfToastClose" aria-label="Dismiss">
+        &#x2715;
+      </button>
+    </div>
+
+    <!-- -- Social Section -- -->
     <section id="social" class="section" aria-labelledby="social-title">
       <div class="container-custom">
         <div class="section-wrapper">
-          <h2 id="social-title" class="section-title">Find Me Online</h2>
+          <h2 id="social-title" class="section-title animate-on-scroll fade-in">
+            Find Me Online
+          </h2>
           <div class="social-icons animate-on-scroll zoom-in">
             <a
-              href="https://github.com/ubaidwebdeveloper"
+              href="https://github.com/opsubaid"
               class="social-icon glass-card glow-hover"
               target="_blank"
               data-tooltip="GitHub"
@@ -513,14 +669,6 @@
               ><i class="fab fa-threads"></i
             ></a>
             <a
-              href="https://www.quora.com/profile/Ubaid-Ahmad-217"
-              class="social-icon glass-card glow-hover"
-              target="_blank"
-              data-tooltip="Quora"
-              aria-label="Quora profile"
-              ><i class="fab fa-quora"></i
-            ></a>
-            <a
               href="https://discord.com/users/1419554765783961621"
               class="social-icon glass-card glow-hover"
               target="_blank"
@@ -533,38 +681,33 @@
       </div>
     </section>
 
-    <!-- ── Footer ── -->
+    <!-- -- Footer -- -->
     <footer class="glass-footer">
       <div class="container-custom">
         <div class="footer-upgraded">
           <nav class="footer-quick-links" aria-label="Footer Navigation">
             <a href="./index.html">Home</a>
             <a href="./pages/about.html">About</a>
-            <a href="./pages/projects.html">Projects</a>
+            <a href="#projects">Projects</a>
             <a href="./pages/services.html">Services</a>
-            <a href="./pages/contact.html">Contact</a>
+            <a href="#contact">Contact</a>
           </nav>
           <div class="footer-availability">
             <i class="fas fa-check-circle footer-avail-icon"></i>
             <span>Currently accepting new projects</span>
           </div>
           <p class="footer-copyright">
-            &copy; 2025 Ubaid Ahmad &middot; Built with craft, not templates.
+            &copy; 2026 Ubaid Ahmad &middot; Built with craft, not templates.
           </p>
         </div>
       </div>
     </footer>
-
-    <!-- Available for Work Badge - icon only -->
-    <a
-      href="mailto:iubaidahmad303@gmail.com?subject=Quick%20Enquiry%20--%20Open%20for%20New%20Projects&body=Hi%20Ubaid%2C%0A%0AI%20noticed%20you%20are%20open%20to%20new%20projects%20and%20I%20would%20love%20to%20discuss%20a%20project%20with%20you.%0A%0A---%20What%20I%20Need%20---%0AProject%20type%3A%20%0ATimeline%3A%20%0ABudget%3A%20%0A%0ALooking%20forward%20to%20hearing%20from%20you.%0A%0ABest%20regards%2C%0A%5BYour%20Name%5D"
-      class="available-badge"
-      aria-label="Available for work"
-    >
-      <i class="fas fa-briefcase"></i>
-    </a>
-
     <script src="./scripts/projects-data.js"></script>
-    <script src="./scripts/script.js"></script>
+    <script src="./scripts/skills-data.js"></script>
+    <script src="./scripts/experience-data.js"></script>
+    <script src="./scripts/clients-data.js"></script>
+    <script src="./scripts/testimonials-data.js"></script>
+    <script src="./scripts/app.js"></script>
+    <script src="./scripts/contact-form-validation.js"></script>
   </body>
 </html>

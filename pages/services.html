@@ -10,7 +10,7 @@
     />
     <meta name="author" content="Ubaid Ahmad" />
     <meta name="robots" content="index, follow" />
-    <link rel="icon" type="image/png" href="../assets/webpage-icon.png" />
+    <link rel="icon" type="image/png" href="../assets/favicon.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -36,7 +36,7 @@
     <!-- Liquid Background -->
     <div class="liquid-bg"></div>
 
-    <!-- ── Floating Header ── -->
+    <!-- -- Floating Header -- -->
     <header class="glass-header">
       <div class="container-custom">
         <div class="header-content">
@@ -46,9 +46,9 @@
           <nav class="desktop-nav" aria-label="Main Navigation">
             <a href="../index.html">Home</a>
             <a href="./about.html">About</a>
-            <a href="./projects.html">Projects</a>
+            <a href="../index.html#projects">Projects</a>
             <a href="./services.html" class="nav-active">Services</a>
-            <a href="./contact.html">Contact</a>
+            <a href="../index.html#contact">Contact</a>
           </nav>
           <div class="header-actions">
             <button
@@ -84,7 +84,7 @@
         <nav class="mobile-nav" aria-label="Mobile Navigation">
           <a href="../index.html" class="mobile-nav-link">Home</a>
           <a href="./about.html" class="mobile-nav-link">About</a>
-          <a href="./projects.html" class="mobile-nav-link">Projects</a>
+          <a href="../index.html#projects" class="mobile-nav-link">Projects</a>
           <!-- Services - active with sub-nav -->
           <div class="mobile-nav-group is-active">
             <a href="./services.html" class="mobile-nav-link active-page"
@@ -95,12 +95,12 @@
               <a href="#process-title">How It Works</a>
             </div>
           </div>
-          <a href="./contact.html" class="mobile-nav-link">Contact</a>
+          <a href="../index.html#contact" class="mobile-nav-link">Contact</a>
         </nav>
       </div>
     </div>
 
-    <!-- ── A. Page Header ── -->
+    <!-- -- A. Page Header -- -->
     <section
       class="page-hero hero-animate"
       aria-labelledby="services-hero-title"
@@ -113,11 +113,13 @@
       </div>
     </section>
 
-    <!-- ── B. Three Service Tier Cards ── -->
+    <!-- -- B. Three Service Tier Cards -- -->
     <section class="section" aria-labelledby="tiers-title">
       <div class="container-custom">
         <div class="section-wrapper" style="text-align: center">
-          <h2 id="tiers-title" class="section-title">Service Tiers</h2>
+          <h2 id="tiers-title" class="section-title animate-on-scroll fade-in">
+            Service Tiers
+          </h2>
 
           <div class="service-tier-grid">
             <!-- Tier 1: MERN -->
@@ -136,7 +138,7 @@
                 <li>Vercel + Railway deployment</li>
               </ul>
               <p class="service-turnaround">
-                Turnaround: 2–6 weeks depending on scope
+                Turnaround: 2-6 weeks depending on scope
               </p>
               <a
                 href="mailto:iubaidahmad303@gmail.com?subject=MERN%20Development%20Inquiry&body=Hi%20Ubaid%2C%0A%0AI%20reviewed%20your%20Full-Stack%20MERN%20Development%20service%20and%20I%20would%20love%20to%20discuss%20a%20project%20with%20you.%0A%0A---%20What%20I%20Need%20---%0AProject%20type%3A%20%0ATimeline%3A%20%0ABudget%3A%20%0A%0ALooking%20forward%20to%20hearing%20from%20you.%0A%0ABest%20regards%2C%0A%5BYour%20Name%5D"
@@ -160,7 +162,7 @@
                 <li>Complete design system</li>
                 <li>Developer handoff documentation</li>
               </ul>
-              <p class="service-turnaround">Turnaround: 1–3 weeks</p>
+              <p class="service-turnaround">Turnaround: 1-3 weeks</p>
               <a
                 href="mailto:iubaidahmad303@gmail.com?subject=UI%2FUX%20Design%20Inquiry&body=Hi%20Ubaid%2C%0A%0AI%20reviewed%20your%20UI%2FUX%20Design%20service%20offering%20and%20I%20would%20love%20to%20discuss%20a%20project%20with%20you.%0A%0A---%20What%20I%20Need%20---%0AProject%20type%3A%20%0ATimeline%3A%20%0ABudget%3A%20%0A%0ALooking%20forward%20to%20hearing%20from%20you.%0A%0ABest%20regards%2C%0A%5BYour%20Name%5D"
                 class="service-cta-btn"
@@ -183,7 +185,7 @@
                 <li>Information architecture planning</li>
                 <li>Actionable roadmap delivery</li>
               </ul>
-              <p class="service-turnaround">Turnaround: 2–5 days</p>
+              <p class="service-turnaround">Turnaround: 2-5 days</p>
               <a
                 href="mailto:iubaidahmad303@gmail.com?subject=Consultation%20%26%20Discovery%20Inquiry&body=Hi%20Ubaid%2C%0A%0AI%20reviewed%20your%20Consultation%20%26%20Discovery%20service%20and%20I%20would%20love%20to%20discuss%20a%20project%20with%20you.%0A%0A---%20What%20I%20Need%20---%0AProject%20type%3A%20%0ATimeline%3A%20%0ABudget%3A%20%0A%0ALooking%20forward%20to%20hearing%20from%20you.%0A%0ABest%20regards%2C%0A%5BYour%20Name%5D"
                 class="service-cta-btn"
@@ -195,11 +197,16 @@
       </div>
     </section>
 
-    <!-- ── C. Process Section ── -->
+    <!-- -- C. Process Section -- -->
     <section class="section" aria-labelledby="process-title">
       <div class="container-custom">
         <div class="section-wrapper" style="text-align: center">
-          <h2 id="process-title" class="section-title">How It Works</h2>
+          <h2
+            id="process-title"
+            class="section-title animate-on-scroll fade-in"
+          >
+            How It Works
+          </h2>
 
           <div class="process-flow animate-on-scroll fade-in">
             <div class="process-step">
@@ -255,38 +262,33 @@
       </div>
     </section>
 
-    <!-- ── Footer ── -->
+    <!-- -- Footer -- -->
     <footer class="glass-footer">
       <div class="container-custom">
         <div class="footer-upgraded">
           <nav class="footer-quick-links" aria-label="Footer Navigation">
             <a href="../index.html">Home</a>
             <a href="./about.html">About</a>
-            <a href="./projects.html">Projects</a>
+            <a href="../index.html#projects">Projects</a>
             <a href="./services.html">Services</a>
-            <a href="./contact.html">Contact</a>
+            <a href="../index.html#contact">Contact</a>
           </nav>
           <div class="footer-availability">
             <i class="fas fa-check-circle footer-avail-icon"></i>
             <span>Currently accepting new projects</span>
           </div>
           <p class="footer-copyright">
-            &copy; 2025 Ubaid Ahmad &middot; Built with craft, not templates.
+            &copy; 2026 Ubaid Ahmad &middot; Built with craft, not templates.
           </p>
         </div>
       </div>
     </footer>
 
-    <!-- Available for Work Badge - icon only -->
-    <a
-      href="mailto:iubaidahmad303@gmail.com?subject=Quick%20Enquiry%20--%20Services%20Page&body=Hi%20Ubaid%2C%0A%0AI%20was%20browsing%20your%20services%20page%20and%20I%20would%20love%20to%20discuss%20a%20project%20with%20you.%0A%0A---%20What%20I%20Need%20---%0AProject%20type%3A%20%0ATimeline%3A%20%0ABudget%3A%20%0A%0ALooking%20forward%20to%20hearing%20from%20you.%0A%0ABest%20regards%2C%0A%5BYour%20Name%5D"
-      class="available-badge"
-      aria-label="Available for work"
-    >
-      <i class="fas fa-briefcase"></i>
-    </a>
-
     <script src="../scripts/projects-data.js"></script>
-    <script src="../scripts/script.js"></script>
+    <script src="../scripts/skills-data.js"></script>
+    <script src="../scripts/experience-data.js"></script>
+    <script src="../scripts/clients-data.js"></script>
+    <script src="../scripts/testimonials-data.js"></script>
+    <script src="../scripts/app.js"></script>
   </body>
 </html>
