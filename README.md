@@ -4,7 +4,7 @@ A high-performance, multi-page developer portfolio built on a **data-driven vani
 architecture**. Engineered for speed, structured for long-term scalability, and designed without a
 single build dependency. The 2026 edition introduces a premium 3D interaction layer, direction-aware
 scroll animations, smart pagination, a universal shimmer-gradient design system, a runtime 10-palette
-theme customizer, and a full suite of dedicated pages (About, Services, Contact) - all written in
+theme customizer, a full certifications section, and a dual-mode contact form — all written in
 pure HTML, CSS, and JavaScript.
 
 ---
@@ -17,10 +17,10 @@ pure HTML, CSS, and JavaScript.
 
 ## What is This Project?
 
-This is a personal developer portfolio for **Ubaid Ahmad**, a Full-Stack MERN developer, UI/UX
-designer. The portfolio is not a template or a theme - it is a custom,
-production-grade static site engineered to communicate technical depth, design sensibility, and
-professional credibility to prospective clients and collaborators.
+This is a personal developer portfolio for **Ubaid Ahmad**, a Full-Stack MERN developer and UI/UX
+designer. The portfolio is not a template or a theme — it is a custom, production-grade static site
+engineered to communicate technical depth, design sensibility, and professional credibility to
+prospective clients and collaborators.
 
 Every design decision in this codebase serves a purpose. The gold/dark glassmorphism system was
 chosen for visual authority. The 3D coin-toss profile card was engineered to demonstrate front-end
@@ -68,37 +68,48 @@ in a browser is a running site.
 ## File Structure
 
 ```
-Ubaid-Dev/
+Ubaid Ahmad/
 |
-|- index.html                          # Home page - semantic layout shell, SEO metadata
+|- index.html                          # Home page - layout shell, SEO metadata, contact form
 |
 |- assets/
-|   |- ubaidahmad-img.jpg              # Profile photo
-|   |- ubaid-ahmad-cv.pdf              # CV - REPLACE WITH REAL FILE
-|   |- webpage-icon.png                # Favicon
-|   |- muhammad-dawood-screenshot.png  # Project thumbnail
-|   |- hadaf-immigration-screenshot.png
-|   `- study-station-screenshot.png
+|   |- hero-profile-portrait.png       # Profile photo (coin card front face)
+|   |- favicon.png                     # Favicon
+|   |- avatars/                        # Testimonial reviewer headshots
+|   |   |- muhammad-dawood-devops-engineer-avatar.jpg
+|   |   |- umair-amjad-software-engineer-avatar.jpg
+|   |   |- wajeeha-sultan-frontend-developer-avatar.jpg
+|   |   `- zaheer-abbas-fullstack-dev-avatar.jpg
+|   |- credentials/                    # Certificate images for About page modal
+|   |   |- Introduction to Jupyter.jpg
+|   |   `- Legacy Responsive Web Design V8.png
+|   `- work/                           # Project screenshot thumbnails
+|       |- hadaf-immigration.jpeg
+|       |- portfolio-landing-page.png
+|       `- study-station.jpeg
 |
 |- pages/
-|   |- about.html                      # About / Story page (hero bio, timeline, philosophy)
-|   |- projects.html                   # Full projects grid with filters
-|   |- services.html                   # Services / Hire Me (3 tiers, 5-step process)
-|   `- contact.html                    # Contact channels (no forms, mailto only)
+|   |- about.html                      # About / Story page (bio, timeline, certifications, philosophy)
+|   `- services.html                   # Services / Hire Me (3 tiers, 5-step process)
 |
 |- scripts/
-|   |- projects-data.js                # Single source of truth for all project data
-|   `- script.js                       # All JS - render functions, animations, theme toggle,
-|                                      #   theme customizer, mobile menu
+|   |- projects-data.js                # window.projects — all project objects
+|   |- skills-data.js                  # skillCategories — tabbed skills grid
+|   |- experience-data.js              # experience — paginated timeline
+|   |- clients-data.js                 # clients — logo carousel
+|   |- testimonials-data.js            # testimonials — carousel + modal
+|   |- app.js                          # All render functions, state, animations, theme toggle,
+|   |                                  #   theme customizer, mobile menu, testimonial carousel
+|   |- certification-modal-logic.js    # Cert card → modal wiring (about.html only)
+|   `- contact-form-validation.js      # Dual-mode contact form logic (index.html only)
 |
 |- styles/
-|   `- style.css                       # Design system, animation engine, responsive rules
+|   |- style.css                       # Design system, animation engine, responsive rules
+|   `- about.css                       # About / certifications page-specific styles
 |
 |- docs/
 |   |- PROJECT_EDITING_GUIDE.md        # How to safely extend and maintain the codebase
-|   |- PROJECT_TYPE_DEFINITIONS.md     # Official tag taxonomy for project classification
-|   |- DESIGN_SYSTEM.md               # Complete design token and component reference
-|   `- THEME_AND_CUSTOMIZER_GUIDE.md  # Palette system, light/dark mode, customizer panel
+|   `- DESIGN_SYSTEM.md               # Complete design token and component reference
 |
 |- README.md
 |- CHANGELOG.md
@@ -110,22 +121,81 @@ The project enforces strict separation of concerns:
 - **HTML** handles structure, static metadata, and modal scaffold containers only.
 - **CSS** owns every presentational rule, animation keyframe, and responsive breakpoint.
 - **JavaScript** owns all data arrays, render logic, state management, and DOM output.
+- **Data files** (`*-data.js`) are the single source of truth for all content — edit these
+  to add, remove, or update entries with zero HTML changes.
+
+### Script Load Order
+
+All HTML pages load scripts in this sequence:
+
+```html
+<script src="./scripts/projects-data.js"></script>
+<script src="./scripts/skills-data.js"></script>
+<script src="./scripts/experience-data.js"></script>
+<script src="./scripts/clients-data.js"></script>
+<script src="./scripts/testimonials-data.js"></script>
+<script src="./scripts/app.js"></script>
+<!-- page-specific scripts after app.js -->
+<script src="./scripts/contact-form-validation.js"></script>  <!-- index.html only -->
+<script src="./scripts/certification-modal-logic.js"></script> <!-- about.html only -->
+```
+
+`app.js` reads from the data variables set by the preceding files, so load order is mandatory.
 
 ---
 
 ## Pages
 
-| Page     | File                  | Status | Description                                                     |
-| -------- | --------------------- | ------ | --------------------------------------------------------------- |
-| Home     | `index.html`          | Live   | Hero, stats, skills, experience, projects preview, testimonials |
-| About    | `pages/about.html`    | Live   | Bio, career timeline, tech philosophy, currently block          |
-| Projects | `pages/projects.html` | Live   | Filterable full grid, pinned badges, currently-building card    |
-| Services | `pages/services.html` | Live   | 3 service tiers, 5-step process, no HTML forms                  |
-| Contact  | `pages/contact.html`  | Live   | Channel cards with mailto and href links only                   |
+| Page     | File                 | Status | Description                                                        |
+| -------- | -------------------- | ------ | ------------------------------------------------------------------ |
+| Home     | `index.html`         | Live   | Hero, stats, skills, experience, projects, testimonials, contact   |
+| About    | `pages/about.html`   | Live   | Bio, career timeline, certifications, tech philosophy, currently   |
+| Services | `pages/services.html`| Live   | 3 service tiers, 5-step process, mailto CTAs only                  |
 
 ---
 
-## What is New in the 2026 Edition
+## What is New in v3.0
+
+### Script Modularisation
+
+`script.js` has been retired. All render and animation logic lives in `scripts/app.js`. All
+content data has been extracted into four dedicated files: `skills-data.js`, `experience-data.js`,
+`clients-data.js`, and `testimonials-data.js`. This means editing content never requires opening
+`app.js`. Each data file is self-contained, documented, and independently editable.
+
+### Testimonial Carousel
+
+The static testimonial grid is replaced with a production-grade single-card carousel
+(`id="testimonialCarousel"`). Features: bidirectional slide animation (`enter-left`/`enter-right`
+CSS class toggling), dot navigation, previous/next buttons, keyboard support (`ArrowLeft`/`ArrowRight`),
+auto-advance every 2 minutes (`TC_INTERVAL`), and hover/focus pause. Clicking any slide still
+opens the full testimonial modal. A `carouselAnimating` guard prevents stacked transitions on
+rapid input.
+
+### Certifications Section
+
+`pages/about.html` now includes a `.cert-grid` section with four credential cards. Each card
+carries `data-cert-*` attributes and opens a full-screen `#certModal` displaying the certificate
+image. Falls back to a placeholder icon when the image asset is not yet available. Wired by
+`scripts/certification-modal-logic.js` (loaded on `about.html` only).
+
+### Dual-Mode Contact Form
+
+The contact form is back on `index.html` — rebuilt as a dual-mode widget. A tab selector
+switches between **Mail** mode (builds a `mailto:` URI) and **WhatsApp** mode (builds a
+`https://wa.me/` deep-link). Fields show/hide conditionally per mode. Each field has an inline
+error span for real-time validation. A toast notification confirms send or reports errors. All
+logic lives in `scripts/contact-form-validation.js`.
+
+### Homepage Sections Added
+
+- `#collaboration` — a CTA block positioned after the projects carousel.
+- `#social` — a social-icon grid with `.social-icon.glass-card.glow-hover` cards for
+  GitHub, LinkedIn, Instagram, WhatsApp, Telegram, and email.
+
+---
+
+## What is New in the 2026 Edition (v2.x)
 
 ### Dynamic 3D Coin-Toss Profile Card
 
@@ -162,39 +232,28 @@ All `.glass-card`, `.cta-button`, `.load-more-btn`, `.connect-btn`, `.modal-link
 `.category-btn` elements carry a `::after` pseudo-element shimmer stripe.
 `.modal-content` is deliberately excluded via `:not(.modal-content)`.
 
-### Dedicated Pages Added (Audit v2.0)
-
-- **About page** - Full career narrative, CSS-only timeline, tech philosophy cards, and a
-  "Currently" block showing active music, reading, and projects.
-- **Services page** - Three service tiers (MERN Full-Stack, UI/UX Design, Agentic AI), a
-  five-step engagement process, all CTAs linking to `mailto:` only.
-- **Contact page** - Dedicated channel cards for email, GitHub, LinkedIn, and Calendly.
-  The contact form was permanently removed from the codebase.
-
 ### Theme Customizer - 10-Palette Runtime Switcher
 
 A floating palette trigger button (`#cs-trigger`) opens a slide-in panel (`#cs-panel`) that
-allows visitors to switch between 10 colour palettes at runtime. Palettes include: Gold Noir,
+allows visitors to switch between 10 colour palettes at runtime. Palettes: Gold Noir,
 Amethyst, Cyber Teal, Rose Prestige, Emerald, Arctic Frost, Amber Forge, Crimson, Silver Ghost,
-and Coral Flame. The selected palette persists across page loads and navigation via
-`localStorage('ua-palette')`. The `--accent-rgb` CSS variable is updated per-palette to keep
-rgba-based component colours consistent with the active accent.
+and Coral Flame. The selected palette persists across page loads via `localStorage('ua-palette')`.
+The `--accent-rgb` CSS variable is updated per-palette to keep rgba-based component colours
+consistent with the active accent.
 
-See `docs/THEME_AND_CUSTOMIZER_GUIDE.md` for the full palette reference and instructions for
-adding new palettes.
+### Interactive Client Carousel
 
-### Interactive Client Carousel (v2.5 Upgrade)
-
-The `clients` array accepts `link` and `linkType` fields (not `url`). Each logo is wrapped in
-a clickable `<a>` tag. Cards with no `logo` field render a gold initial pill + company name.
-A link-type badge icon (globe, Facebook, or Instagram) renders in the card corner based on
-`linkType`. `mouseenter` pauses the animation track; `mouseleave` resumes it.
+The `clients` array (in `scripts/clients-data.js`) accepts `link` and `linkType` fields.
+Cards with no `logo` field render a gold initial pill + company name. A link-type badge icon
+renders in the card corner based on `linkType`. `mouseenter` pauses the animation; `mouseleave`
+resumes it. The clients section is currently commented out in `index.html` pending updated asset
+data.
 
 ### Light / Dark Mode Toggle
 
 A persistent theme toggle backed by `localStorage("theme")` allows users to switch between dark
 and light modes. Light mode is applied via `data-theme="light"` on the `<html>` element. The
-active theme persists across page loads. See `docs/THEME_AND_CUSTOMIZER_GUIDE.md` section 1.
+active theme persists across page loads.
 
 ### Available for Work Badge
 
@@ -204,22 +263,21 @@ a `bounce` keyframe animation and links directly to the primary contact `mailto:
 ### Mobile Menu Sub-Navigation
 
 The mobile hamburger menu supports an accordion sub-navigation system. Tapping a top-level link
-with a `.mobile-subnav` block expands it while collapsing any previously open group. See
-`docs/PROJECT_EDITING_GUIDE.md` section 17.
+with a `.mobile-subnav` block expands it while collapsing any previously open group.
 
 ---
 
 ## Data-Driven Rendering
 
-All dynamic content lives in arrays inside `scripts/script.js` and `scripts/projects-data.js`:
+All dynamic content lives in dedicated data files under `scripts/`:
 
-| Array             | Renders Into             | File               |
-| ----------------- | ------------------------ | ------------------ |
-| `skillCategories` | Tabbed skills grid       | `script.js`        |
-| `experience`      | Paginated timeline       | `script.js`        |
-| `projects`        | Filterable project cards | `projects-data.js` |
-| `clients`         | Infinite logo carousel   | `script.js`        |
-| `testimonials`    | Testimonial grid + modal | `script.js`        |
+| Array             | Renders Into              | File                        |
+| ----------------- | ------------------------- | --------------------------- |
+| `window.projects` | Featured projects carousel | `scripts/projects-data.js` |
+| `skillCategories` | Tabbed skills grid        | `scripts/skills-data.js`    |
+| `experience`      | Paginated timeline        | `scripts/experience-data.js`|
+| `clients`         | Infinite logo carousel    | `scripts/clients-data.js`   |
+| `testimonials`    | Single-card carousel      | `scripts/testimonials-data.js`|
 
 To add content, append a correctly structured object to the relevant array. No HTML editing
 required. For the full object shape of each array, see `docs/PROJECT_EDITING_GUIDE.md`.
@@ -266,12 +324,12 @@ Add `animate-on-scroll` to any element, then pair it with one of three modifier 
 
 ## Performance
 
-- **IntersectionObserver** - animations fire only when elements enter the viewport.
-- **Passive scroll listener** - direction-tracking listener is `{ passive: true }`.
-- **Lazy loading** - project images use `loading="lazy"`.
-- **Event delegation** - modal open/close handled with minimal document-level listeners.
-- **Zero build step** - no bundler, no transpiler, no Node.js.
-- **CDN-only dependencies** - all third-party libraries load from CDN.
+- **IntersectionObserver** — animations fire only when elements enter the viewport.
+- **Passive scroll listener** — direction-tracking listener is `{ passive: true }`.
+- **Lazy loading** — project images and certificate images use `loading="lazy"`.
+- **Event delegation** — modal open/close handled with minimal document-level listeners.
+- **Zero build step** — no bundler, no transpiler, no Node.js.
+- **CDN-only dependencies** — all third-party libraries load from CDN.
 
 ---
 
@@ -310,46 +368,18 @@ The live site is currently deployed at [bugcurator.github.io](https://bugcurator
 
 ---
 
-## Audit Compliance Summary (v2.0 Rebuild)
-
-| Audit Finding                           | Status      | File(s) Changed                     |
-| --------------------------------------- | ----------- | ----------------------------------- |
-| Hero not visible on load                | Implemented | `index.html`, `style.css`           |
-| Generic hero copy                       | Implemented | `index.html`                        |
-| CV download commented out               | Implemented | `index.html`, `about.html`          |
-| Coin back "TRUSTED EXPERT" weak         | Implemented | `index.html`, `style.css`           |
-| Fake client placeholder logos           | Implemented | `scripts/script.js`                 |
-| Stat counter labels vague               | Implemented | `index.html`, `script.js`           |
-| 4th stat "Technologies" missing         | Implemented | `index.html`                        |
-| No About page                           | Implemented | `pages/about.html`                  |
-| No Services page                        | Implemented | `pages/services.html`               |
-| No Contact page (form-free)             | Implemented | `pages/contact.html`                |
-| Nav only had section anchors            | Implemented | All pages                           |
-| No available-for-work signal            | Implemented | All pages, `style.css`              |
-| No light/dark mode toggle               | Implemented | All pages, `script.js`, `style.css` |
-| No career timeline                      | Implemented | `pages/about.html`, `style.css`     |
-| No tech philosophy section              | Implemented | `pages/about.html`                  |
-| No featured project differentiation     | Implemented | `script.js`, `style.css`            |
-| No outcome tags on project cards        | Implemented | `projects-data.js`, `script.js`     |
-| No currently-building signal            | Implemented | `pages/projects.html`, `style.css`  |
-| Footer had no quick links or social row | Implemented | All pages, `style.css`              |
-| No social proof CTA under testimonials  | Implemented | `index.html`                        |
-| Blog page referenced in nav             | Removed     | All pages                           |
-| Forms anywhere in codebase              | Removed     | All pages (mailto only)             |
-
----
-
 ## Extending the Portfolio
 
 See `docs/PROJECT_EDITING_GUIDE.md` for the complete reference. Quick summary:
 
-- **New project** - Append to the `projects` array in `scripts/projects-data.js`. First 3 entries auto-pin.
-- **New skill** - Append to the correct `skillCategories[n].skills` array in `script.js`.
-- **New experience entry** - Append to the `experience` array. Index controls visibility.
-- **New testimonial** - Append to the `testimonials` array.
-- **New client** - Append to the `clients` array with `name`, `link`, `linkType`, and optional `logo`.
-- **New palette** - Add a palette object to `PALETTES` in `initThemeCustomizer()`. See `docs/THEME_AND_CUSTOMIZER_GUIDE.md`.
-- **New section** - Apply `.section`, `.container-custom`, `.section-wrapper`, and `.animate-on-scroll`.
+- **New project** — Append to `window.projects` in `scripts/projects-data.js`. First 3 entries auto-pin.
+- **New skill** — Append to the correct `skillCategories[n].skills` array in `scripts/skills-data.js`.
+- **New experience entry** — Append to the `experience` array in `scripts/experience-data.js`.
+- **New testimonial** — Append to the `testimonials` array in `scripts/testimonials-data.js`.
+- **New client** — Append to the `clients` array in `scripts/clients-data.js`.
+- **New certification** — Add a `.cert-card` block in `pages/about.html` and drop the image into `assets/credentials/`.
+- **New palette** — Add a palette object to `PALETTES` in `initThemeCustomizer()` inside `app.js`.
+- **New section** — Apply `.section`, `.container-custom`, `.section-wrapper`, and `.animate-on-scroll`.
 
 ---
 
@@ -357,11 +387,11 @@ See `docs/PROJECT_EDITING_GUIDE.md` for the complete reference. Quick summary:
 
 This project favors:
 
-- **Simplicity over abstraction** - if vanilla JS solves it cleanly, no library is added.
-- **Data-driven rendering** - arrays own all content; functions own all layout logic.
-- **Performance over decoration** - every animation serves a UX purpose and costs nothing at idle.
-- **Clear structure over framework complexity** - the codebase is readable by any developer in under 10 minutes.
-- **No forms, no friction** - all contact CTAs use `mailto:` links. Visitors go directly to email.
+- **Simplicity over abstraction** — if vanilla JS solves it cleanly, no library is added.
+- **Data-driven rendering** — arrays own all content; functions own all layout logic.
+- **Modular data files** — content and logic are always in separate files.
+- **Performance over decoration** — every animation serves a UX purpose and costs nothing at idle.
+- **Clear structure over framework complexity** — the codebase is readable by any developer in under 10 minutes.
 
 Strong structure signals strong thinking.
 
@@ -371,12 +401,10 @@ Strong structure signals strong thinking.
 
 All extended documentation lives in the `docs/` directory.
 
-| File                                 | Purpose                                                           |
-| ------------------------------------ | ----------------------------------------------------------------- |
-| `docs/PROJECT_EDITING_GUIDE.md`      | Step-by-step instructions for adding and modifying all content    |
-| `docs/PROJECT_TYPE_DEFINITIONS.md`   | Full taxonomy of project classification tags and their CSS values |
-| `docs/DESIGN_SYSTEM.md`              | Complete design token reference, component classes, and animation |
-| `docs/THEME_AND_CUSTOMIZER_GUIDE.md` | Palette system, light/dark mode, and customizer panel reference   |
+| File                            | Purpose                                                        |
+| ------------------------------- | -------------------------------------------------------------- |
+| `docs/PROJECT_EDITING_GUIDE.md` | Step-by-step instructions for adding and modifying all content |
+| `docs/DESIGN_SYSTEM.md`         | Complete design token reference, component classes, animation  |
 
 ---
 

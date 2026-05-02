@@ -7,6 +7,153 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [3.0.0] - 2026-05
+
+This release is a structural and content overhaul following the v2.x series. The JavaScript
+architecture has been fully modularised into dedicated data files. The testimonial section has
+been rebuilt as a production-grade carousel. A dual-mode contact form has been re-introduced
+to the homepage. The About page now carries a Certifications section backed by its own modal
+system. Non-existent pages (`contact.html`, `projects.html`) have been retired and their
+responsibilities folded back into `index.html` and `pages/about.html` respectively.
+
+---
+
+### Added
+
+#### Script Modularisation - Five-File Architecture
+
+- `script.js` retired and fully replaced by `app.js`. All render functions, state variables,
+  animation logic, and initialisation calls now live in `scripts/app.js`.
+- Four data files extracted from the monolithic `script.js` into dedicated modules, each
+  loaded via `<script>` before `app.js`:
+  - `scripts/skills-data.js` — `skillCategories` array (tabbed skills section).
+  - `scripts/experience-data.js` — `experience` array (paginated timeline).
+  - `scripts/clients-data.js` — `clients` array (logo carousel).
+  - `scripts/testimonials-data.js` — `testimonials` array (carousel + modal).
+- `scripts/projects-data.js` was already a separate file and is unchanged.
+- Load order in all HTML pages: `projects-data.js` → `skills-data.js` →
+  `experience-data.js` → `clients-data.js` → `testimonials-data.js` → `app.js` →
+  `contact-form-validation.js`.
+
+#### Certifications Section (`pages/about.html`)
+
+- New `.cert-grid` section added to `pages/about.html` below the career timeline.
+  Section is accessible via `aria-labelledby="certifications-title"` and linked from the
+  mobile sub-navigation under the About anchor.
+- Four `.cert-card.glass-card` components, each carrying:
+  - `data-cert-name` — certificate title.
+  - `data-cert-institute` — issuing institution.
+  - `data-cert-date` — issue date or `"Coming Soon"` placeholder.
+  - `data-cert-img` — relative path to the credential image asset.
+- Current credential inventory:
+  - **Introduction to Jupyter** — 365 DataScience, November 04 2024.
+  - **Legacy Responsive Web Design V8** — freeCodeCamp, April 6 2026.
+  - **JavaScript Programming** — freeCodeCamp, Coming Soon.
+  - **Responsive Web Design** — freeCodeCamp, Coming Soon.
+- `#certModal` overlay with `.modal-content.glass-card` renders the full credential image
+  on card click. Modal exposes `id="certModalTitle"` and `id="certModalSub"` for
+  accessible labelling and `id="certModalBody"` for the image injection target.
+- Falls back to a `.cert-modal-placeholder` block (with `fa-certificate` icon) when
+  `data-cert-img` is empty.
+- `scripts/certification-modal-logic.js` — new IIFE that wires all `.cert-card` elements
+  to the modal: click, `Enter`/`Space` keydown, close-button click, backdrop click, and
+  `Escape` keydown. Loaded on `pages/about.html` only.
+
+#### Dual-Mode Contact Form (`index.html`)
+
+- Contact form re-introduced on `index.html` under `id="contact"` section. The form
+  (`id="contactForm"`) is now a dual-mode widget supporting two send paths:
+  - **Mail mode** — builds and opens a `mailto:` URI; email input visible, WhatsApp
+    field hidden.
+  - **WhatsApp mode** — builds and opens a `https://wa.me/` deep-link; contact number
+    input visible, email field hidden.
+- Tab selector (`.cf-tab-pill` animated indicator) switches between `data-mode="mail"`
+  and `data-mode="whatsapp"` tabs.
+- Fields: name, email / WhatsApp number (conditional), subject (mail only), message.
+  Each field has a corresponding inline error span for real-time validation feedback.
+- Toast notification (`#cfToast`) displayed on successful submission or validation failure.
+- Submit button (`#cfSubmitBtn`) label and icon update dynamically per active mode.
+- `scripts/contact-form-validation.js` handles all form logic: mode switching, field
+  visibility toggling, validation, URI construction, and toast lifecycle.
+
+#### Homepage Sections
+
+- `#collaboration` section added to `index.html` — a CTA block encouraging project
+  enquiries, positioned after the projects carousel.
+- `#social` section added to `index.html` — a social-icon grid using
+  `.social-icon.glass-card.glow-hover` cards for GitHub, LinkedIn, Instagram, WhatsApp,
+  Telegram, and email links.
+
+#### Testimonial Carousel State Constants
+
+- `TC_INTERVAL = 120_000` (2 minutes) — auto-advance interval for the testimonial
+  carousel, defined at module level in `app.js`.
+- `carouselIndex`, `carouselTimer`, `carouselAnimating` state variables added to manage
+  carousel position, auto-advance handle, and mid-transition guard respectively.
+
+---
+
+### Changed
+
+#### Testimonials — Grid → Single-Card Carousel
+
+- The static testimonial grid has been fully replaced with a single-card carousel
+  (`id="testimonialCarousel"`, `role="carousel"`).
+- Bidirectional slide animation: `tcGoTo(newIndex, direction)` slides the outgoing card
+  out (`exit-left` or `exit-right`) and the incoming card in (`enter-left` or
+  `enter-right`) simultaneously via CSS class toggling and `transitionend` cleanup.
+- Auto-advance: `tcStart()` calls `setInterval(tcNavigate("next"), TC_INTERVAL)`.
+  `tcPause()` and `tcResume()` are bound to `mouseenter`/`mouseleave` and
+  `focusin`/`focusout` events on the carousel container.
+- `tcResetTimer()` cancels and restarts the interval on any manual navigation to prevent
+  a skip immediately after a user interaction.
+- Dot navigation: `id="tcDots"` container renders one `.carousel-dot` per testimonial.
+  `tcUpdateDots(activeIndex)` toggles the `.tc-dot-active` class on every state change.
+- Previous / next buttons (`.carousel-prev`, `.carousel-next`) with `fa-chevron-left` /
+  `fa-chevron-right` icons.
+- Keyboard support: `ArrowLeft` calls `tcNavigate("prev")`, `ArrowRight` calls
+  `tcNavigate("next")`.
+- Clicking a carousel slide opens the testimonial detail modal (unchanged modal behaviour).
+- `renderTestimonials()` output uses `#tcTrack` as the slide container and injects
+  `.carousel-slide` wrappers around each `.testimonial-card`.
+
+#### Services Page — Tier 3 Renamed
+
+- Service tier 3 title changed from **"Agentic AI"** (named in v2.0.0 README) to
+  **"Consultation & Discovery"**. The tier now covers project scoping, requirements
+  analysis, tech stack recommendation, UI/UX audits, information architecture planning,
+  and actionable roadmap delivery. Turnaround: 2–5 days.
+
+#### Pages Retired
+
+- `pages/contact.html` removed from the codebase. Contact functionality now lives
+  exclusively in `index.html#contact` via the dual-mode contact form.
+- `pages/projects.html` removed from the codebase. No projects filter page is
+  currently active.
+
+---
+
+### Fixed
+
+#### Testimonial Carousel - Mid-Transition Guard
+
+- `carouselAnimating` boolean flag prevents `tcGoTo()` from being called while a slide
+  transition is already in progress, eliminating stacked transitions that previously caused
+  the carousel track to desync on rapid keyboard or button input.
+
+---
+
+### Removed
+
+- `scripts/script.js` — fully retired; replaced by `scripts/app.js` and the four
+  dedicated data files.
+- `pages/contact.html` — removed (contact absorbed into `index.html`).
+- `pages/projects.html` — removed.
+- Clients carousel hidden: the `#clients` section in `index.html` is currently commented
+  out pending updated client asset data.
+
+---
+
 ## [2.10.0] - 2026-03
 
 ### Added
@@ -140,7 +287,7 @@ Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `.mobile-nav-group.is-active > .mobile-nav-link` receives a gold accent tint to indicate the
   expanded state visually.
 - `initMobileMenu()` in `script.js` updated with sub-nav accordion logic: clicking a group's
-  parent link adds `is-active` to that group, collapses all other groups, and calls
+    parent link adds `is-active` to that group, collapses all other groups, and calls
   `e.preventDefault()` to stay on page while expanding. Sub-links close the overlay on tap.
 
 #### Theme Toggle Button Sizing
