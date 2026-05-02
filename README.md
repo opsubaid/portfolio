@@ -11,7 +11,7 @@ pure HTML, CSS, and JavaScript.
 
 ## Live Preview
 
-**[bugcurator.github.io](https://bugcurator.github.io/Ubaid-Dev)**
+**[opsubaid.github.io](https://opsubaid.github.io/portfolio)**
 
 ---
 
